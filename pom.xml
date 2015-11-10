@@ -219,7 +219,7 @@
         <version.org.wildfly.arquillian>1.0.1.Final</version.org.wildfly.arquillian>
         <version.org.yaml.snakeyaml>1.15.0.redhat-1</version.org.yaml.snakeyaml>
         <version.sun.jaxb>2.2.11.redhat-2</version.sun.jaxb>
-        <version.sun.saaj-impl>1.3.16-jbossorg-1</version.sun.saaj-impl>
+        <version.sun.saaj-impl>1.3.16.SP1-redhat-4</version.sun.saaj-impl>
         <version.rhino.js>1.7R2</version.rhino.js>
         <version.wsdl4j>1.6.3.redhat-2</version.wsdl4j>
         <version.xml-resolver>1.2.0.redhat-11</version.xml-resolver> <!-- Apache xml-resolver -->
