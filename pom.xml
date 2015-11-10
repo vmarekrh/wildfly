@@ -79,7 +79,7 @@
             For example: <version.org.jboss.hal.release-stream>
          -->
 
-        <version.antlr>2.7.7</version.antlr>
+        <version.antlr>2.7.7.redhat-7</version.antlr>
         <version.asm>3.3.1.redhat-11</version.asm>
         <version.ch.qos.cal10n>0.8.1.redhat-1</version.ch.qos.cal10n>
         <version.com.fasterxml.classmate>1.1.0.redhat-1</version.com.fasterxml.classmate>
