@@ -216,11 +216,11 @@
         <version.org.syslog4j>0.9.30</version.org.syslog4j>
         <version.org.wildfly.build-tools>1.1.0.Final</version.org.wildfly.build-tools>
         <version.org.wildfly.checkstyle-config>1.0.4.Final</version.org.wildfly.checkstyle-config>
-        <version.org.wildfly.core>2.0.0.Final</version.org.wildfly.core>
+        <version.org.wildfly.core>2.0.1.Final-redhat-1</version.org.wildfly.core>
         <version.org.wildfly.arquillian>1.0.1.Final</version.org.wildfly.arquillian>
         <version.org.yaml.snakeyaml>1.15.0.redhat-1</version.org.yaml.snakeyaml>
         <version.sun.jaxb>2.2.11.redhat-2</version.sun.jaxb>
-        <version.sun.saaj-impl>1.3.16.SP1-redhat-4</version.sun.saaj-impl>
+        <version.sun.saaj-impl>1.3.16-jbossorg-1</version.sun.saaj-impl>
         <version.rhino.js>1.7R2</version.rhino.js>
         <version.wsdl4j>1.6.3.redhat-2</version.wsdl4j>
         <version.xml-resolver>1.2.0.redhat-11</version.xml-resolver> <!-- Apache xml-resolver -->
@@ -254,6 +254,7 @@
         <org.jboss.model.test.cache.root>[pom.xml,testsuite]</org.jboss.model.test.cache.root>
         <!-- Location relative to root that will be used for the cached legacy classpaths used by subsystem-test and core-model-test-->
         <org.jboss.model.test.classpath.cache>target/model-test-classpath-cache</org.jboss.model.test.classpath.cache>
+        <org.jboss.model.test.maven.repository.urls>http://download.eng.bos.redhat.com/brewroot/repos/jb-eap-7.0-rhel-7-maven-build/latest/maven/,https://maven.repository.redhat.com/ga/</org.jboss.model.test.maven.repository.urls>
         <version.com.github.spullara.mustache>0.8.13.redhat-1</version.com.github.spullara.mustache>
     </properties>
 
@@ -368,7 +369,7 @@
                             <org.jboss.model.test.cache.root>${org.jboss.model.test.cache.root}</org.jboss.model.test.cache.root>
                             <org.jboss.model.test.classpath.cache>${org.jboss.model.test.classpath.cache}</org.jboss.model.test.classpath.cache>
                             <org.jboss.model.test.cache.strict>true</org.jboss.model.test.cache.strict>
-                            <!--<org.jboss.model.test.maven.repository.urls>${org.jboss.model.test.maven.repository.urls}</org.jboss.model.test.maven.repository.urls>-->
+                            <org.jboss.model.test.maven.repository.urls>${org.jboss.model.test.maven.repository.urls}</org.jboss.model.test.maven.repository.urls>
                         </systemPropertyVariables>
                         <systemProperties>
                               <property>
