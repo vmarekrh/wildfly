@@ -142,7 +142,7 @@
         <version.org.glassfish.javax.json>1.0.3.redhat-1</version.org.glassfish.javax.json>
         <version.org.hibernate>5.0.1.Final-redhat-2</version.org.hibernate>
         <version.org.hibernate.commons.annotations>5.0.0.Final-redhat-2</version.org.hibernate.commons.annotations>
-        <version.org.hibernate.validator>5.2.2.Final</version.org.hibernate.validator>
+        <version.org.hibernate.validator>5.2.2.Final-redhat-2</version.org.hibernate.validator>
         <version.org.hibernate.javax.persistence.hibernate-jpa-2.1-api>1.0.0.Final-redhat-1</version.org.hibernate.javax.persistence.hibernate-jpa-2.1-api>
         <version.org.hibernate.search>5.5.0.Final-redhat-1</version.org.hibernate.search>
         <version.org.hornetq>2.4.7.Final-redhat-1</version.org.hornetq>
@@ -220,7 +220,7 @@
         <version.org.wildfly.arquillian>1.0.1.Final</version.org.wildfly.arquillian>
         <version.org.yaml.snakeyaml>1.15.0.redhat-1</version.org.yaml.snakeyaml>
         <version.sun.jaxb>2.2.11.redhat-2</version.sun.jaxb>
-        <version.sun.saaj-impl>1.3.16-jbossorg-1</version.sun.saaj-impl>
+        <version.sun.saaj-impl>1.3.16.SP1-redhat-6</version.sun.saaj-impl>
         <version.rhino.js>1.7R2</version.rhino.js>
         <version.wsdl4j>1.6.3.redhat-2</version.wsdl4j>
         <version.xml-resolver>1.2.0.redhat-11</version.xml-resolver> <!-- Apache xml-resolver -->
