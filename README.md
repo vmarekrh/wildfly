@@ -1,5 +1,5 @@
-WildFly Application Server
-========================
+JBoss Enterprise Application Platform (EAP) 7
+=============================================
 http://wildfly.org
 
 * Fast Startup
@@ -29,11 +29,11 @@ If you already have Maven 3.2.5 (or newer) installed you can use it directly
 > mvn install
 
 
-Starting and Stopping WildFly 
+Starting and Stopping EAP 
 ------------------------------------------
 Change to the bin directory after a successful build
 
-> $ cd build/target/wildfly-\[version\]/bin
+> $ cd build/target/jboss-eap/bin
 
 Start the server in domain mode
 
@@ -46,8 +46,6 @@ Start the server in standalone mode
 To stop the server, press Ctrl + C, or use the admin console
 
 > $ ./jboss-cli.sh --connect command=:shutdown
-
-More information: https://docs.jboss.org/author/display/WFLY10/Getting+Started+Guide
 
 Contributing
 ------------------
