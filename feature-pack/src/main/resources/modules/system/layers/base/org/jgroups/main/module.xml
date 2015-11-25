@@ -23,6 +23,10 @@
   -->
 
 <module xmlns="urn:jboss:module:1.3" name="org.jgroups">
+    <properties>
+        <property name="jboss.api" value="unsupported"/>
+    </properties>
+
 
     <resources>
         <artifact name="${org.jgroups:jgroups}"/>
