@@ -80,7 +80,7 @@
          -->
 
         <version.antlr>2.7.7.redhat-7</version.antlr>
-        <version.asm>3.3.1.redhat-11</version.asm>
+        <version.asm>3.3.1.redhat-12</version.asm>
         <version.ch.qos.cal10n>0.8.1.redhat-1</version.ch.qos.cal10n>
         <version.com.fasterxml.classmate>1.1.0.redhat-1</version.com.fasterxml.classmate>
         <version.com.fasterxml.jackson>2.5.4.redhat-1</version.com.fasterxml.jackson>
@@ -96,7 +96,7 @@
         <version.commons-codec>1.10.0.redhat-5</version.commons-codec>
         <version.commons-collections>3.2.2.redhat-1</version.commons-collections>
         <version.commons-digester>1.8</version.commons-digester>
-        <version.commons-pool>1.6.0.redhat-8</version.commons-pool>
+        <version.commons-pool>1.6.0.redhat-9</version.commons-pool>
         <version.dom4j>1.6.1.redhat-7</version.dom4j>
         <version.gnu.getopt>1.0.13.redhat-5</version.gnu.getopt>
         <version.groovy-all>2.4.3</version.groovy-all>
@@ -219,7 +219,7 @@
         <version.org.wildfly.core>2.0.3.Final-redhat-1</version.org.wildfly.core>
         <version.org.wildfly.arquillian>1.0.2.Final</version.org.wildfly.arquillian>
         <version.org.yaml.snakeyaml>1.15.0.redhat-1</version.org.yaml.snakeyaml>
-        <version.sun.jaxb>2.2.11.redhat-2</version.sun.jaxb>
+        <version.sun.jaxb>2.2.11.redhat-3</version.sun.jaxb>
         <version.sun.saaj-impl>1.3.16.SP1-redhat-6</version.sun.saaj-impl>
         <version.rhino.js>1.7R2</version.rhino.js>
         <version.wsdl4j>1.6.3.redhat-2</version.wsdl4j>
