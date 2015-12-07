@@ -1,5 +1,5 @@
-JBoss Enterprise Application Platform (EAP) 7
-=============================================
+JBoss Enterprise Application Platform (JBoss EAP) 7
+===================================================
 http://wildfly.org
 
 * Fast Startup
@@ -29,8 +29,8 @@ If you already have Maven 3.2.5 (or newer) installed you can use it directly
 > mvn install
 
 
-Starting and Stopping EAP 
-------------------------------------------
+Starting and Stopping JBoss EAP
+--------------------------------
 Change to the bin directory after a successful build
 
 > $ cd build/target/jboss-eap/bin
