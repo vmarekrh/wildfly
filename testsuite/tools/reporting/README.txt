@@ -1,7 +1,7 @@
 
 
 
-If somebody needs to create test reports as we all know them from Hudson or EAP testsuite, here is the example how.
+If somebody needs to create test reports as we all know them from Hudson or JBoss EAP testsuite, here is the example how.
 For example: running jbossws-native testsuite.
 
   cd <your build directory>
