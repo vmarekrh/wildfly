@@ -94,7 +94,7 @@
         <version.commons-beanutils>1.9.2.redhat-1</version.commons-beanutils>
         <version.commons-cli>1.2.0.redhat-10</version.commons-cli>
         <version.commons-codec>1.10.0.redhat-5</version.commons-codec>
-        <version.commons-collections>3.2.2.redhat-1</version.commons-collections>
+        <version.commons-collections>3.2.2.redhat-2</version.commons-collections>
         <version.commons-digester>1.8</version.commons-digester>
         <version.commons-pool>1.6.0.redhat-9</version.commons-pool>
         <version.dom4j>1.6.1.redhat-7</version.dom4j>
@@ -212,7 +212,7 @@
         <version.org.picketlink>2.5.5.SP1-redhat-1</version.org.picketlink>
         <version.org.picketlink.picketlink-wildfly8>2.5.5.SP1-redhat-2</version.org.picketlink.picketlink-wildfly8>
         <version.org.scannotation>1.0.3.redhat-5</version.org.scannotation>
-        <version.org.slf4j>1.7.7.redhat-1</version.org.slf4j>
+        <version.org.slf4j>1.7.7.redhat-2</version.org.slf4j>
         <version.org.syslog4j>0.9.30</version.org.syslog4j>
         <version.org.wildfly.build-tools>1.1.0.Final</version.org.wildfly.build-tools>
         <version.org.wildfly.checkstyle-config>1.0.4.Final</version.org.wildfly.checkstyle-config>
