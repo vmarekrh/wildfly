@@ -24,9 +24,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>wildfly-parent</artifactId>
-        <groupId>org.wildfly</groupId>
-        <version>10.0.0.CR6-redhat-SNAPSHOT</version>
+        <artifactId>jboss-eap-parent</artifactId>
+        <groupId>org.jboss.eap</groupId>
+        <version>7.0.0.ER4-redhat-SNAPSHOT</version>
     </parent>
 
     <artifactId>wildfly-mail</artifactId>
@@ -41,7 +41,7 @@
             <artifactId>wildfly-controller</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wildfly</groupId>
+            <groupId>org.jboss.eap</groupId>
             <artifactId>wildfly-ee</artifactId>
         </dependency>
         <dependency>
@@ -49,7 +49,7 @@
             <artifactId>wildfly-server</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wildfly</groupId>
+            <groupId>org.jboss.eap</groupId>
             <artifactId>wildfly-naming</artifactId>
         </dependency>
         <dependency>

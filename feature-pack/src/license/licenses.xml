@@ -1344,7 +1344,7 @@
       </licenses>
     </dependency>
       <dependency>
-          <groupId>org.wildfly</groupId>
+          <groupId>org.jboss.eap</groupId>
           <artifactId>jipijapa-eclipselink</artifactId>
           <licenses>
               <license>
@@ -1354,7 +1354,7 @@
           </licenses>
       </dependency>
       <dependency>
-          <groupId>org.wildfly</groupId>
+          <groupId>org.jboss.eap</groupId>
           <artifactId>jipijapa-hibernate4-1</artifactId>
           <licenses>
               <license>
@@ -1364,7 +1364,7 @@
           </licenses>
       </dependency>
       <dependency>
-          <groupId>org.wildfly</groupId>
+          <groupId>org.jboss.eap</groupId>
           <artifactId>jipijapa-hibernate4-3</artifactId>
           <licenses>
               <license>
@@ -1374,7 +1374,7 @@
           </licenses>
       </dependency>
       <dependency>
-          <groupId>org.wildfly</groupId>
+          <groupId>org.jboss.eap</groupId>
           <artifactId>jipijapa-hibernate5-0</artifactId>
           <licenses>
               <license>
@@ -1384,7 +1384,7 @@
           </licenses>
       </dependency>
       <dependency>
-          <groupId>org.wildfly</groupId>
+          <groupId>org.jboss.eap</groupId>
           <artifactId>jipijapa-openjpa</artifactId>
           <licenses>
               <license>
@@ -1394,7 +1394,7 @@
           </licenses>
       </dependency>
       <dependency>
-          <groupId>org.wildfly</groupId>
+          <groupId>org.jboss.eap</groupId>
           <artifactId>jipijapa-spi</artifactId>
           <licenses>
               <license>
@@ -1404,7 +1404,7 @@
           </licenses>
       </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-appclient</artifactId>
       <licenses>
         <license>
@@ -1415,7 +1415,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-build-config</artifactId>
       <licenses>
         <license>
@@ -1437,7 +1437,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-client-all</artifactId>
       <licenses>
         <license>
@@ -1448,7 +1448,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-clustering-api</artifactId>
       <licenses>
         <license>
@@ -1459,7 +1459,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-clustering-common</artifactId>
       <licenses>
         <license>
@@ -1470,7 +1470,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-clustering-ejb3-infinispan</artifactId>
       <licenses>
         <license>
@@ -1481,7 +1481,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-clustering-impl</artifactId>
       <licenses>
         <license>
@@ -1492,7 +1492,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-clustering-infinispan</artifactId>
       <licenses>
         <license>
@@ -1503,7 +1503,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-clustering-jgroups</artifactId>
       <licenses>
         <license>
@@ -1514,7 +1514,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-clustering-registry</artifactId>
       <licenses>
         <license>
@@ -1525,7 +1525,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-clustering-service</artifactId>
       <licenses>
         <license>
@@ -1536,7 +1536,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-clustering-singleton</artifactId>
       <licenses>
         <license>
@@ -1547,7 +1547,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-clustering-web-infinispan</artifactId>
       <licenses>
         <license>
@@ -1558,7 +1558,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-clustering-web-spi</artifactId>
       <licenses>
         <license>
@@ -1569,7 +1569,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-cmp</artifactId>
       <licenses>
         <license>
@@ -1591,7 +1591,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-connector</artifactId>
       <licenses>
         <license>
@@ -1689,7 +1689,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-ee</artifactId>
       <licenses>
         <license>
@@ -1700,7 +1700,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-ejb-client-bom</artifactId>
       <licenses>
         <license>
@@ -1711,7 +1711,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-ejb3</artifactId>
       <licenses>
         <license>
@@ -1733,7 +1733,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-jacorb</artifactId>
       <licenses>
         <license>
@@ -1744,7 +1744,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-jaxr</artifactId>
       <licenses>
         <license>
@@ -1755,7 +1755,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-jaxrs</artifactId>
       <licenses>
         <license>
@@ -1766,7 +1766,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-jdr</artifactId>
       <licenses>
         <license>
@@ -1777,7 +1777,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-jms-client-bom</artifactId>
       <licenses>
         <license>
@@ -1799,7 +1799,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-jpa</artifactId>
       <licenses>
         <license>
@@ -1810,7 +1810,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-jsr77</artifactId>
       <licenses>
         <license>
@@ -1832,7 +1832,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-mail</artifactId>
       <licenses>
         <license>
@@ -1854,7 +1854,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-messaging</artifactId>
       <licenses>
         <license>
@@ -1865,7 +1865,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-messaging-activemq</artifactId>
       <licenses>
         <license>
@@ -1875,7 +1875,7 @@
         </license>
       </licenses>
     </dependency>    <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-modcluster</artifactId>
       <licenses>
         <license>
@@ -1886,7 +1886,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-naming</artifactId>
       <licenses>
         <license>
@@ -1919,7 +1919,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-pojo</artifactId>
       <licenses>
         <license>
@@ -1963,7 +1963,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-sar</artifactId>
       <licenses>
         <license>
@@ -1974,7 +1974,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-security</artifactId>
       <licenses>
         <license>
@@ -1996,7 +1996,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-sos</artifactId>
       <licenses>
         <license>
@@ -2018,7 +2018,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-transactions</artifactId>
       <licenses>
         <license>
@@ -2029,7 +2029,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-web</artifactId>
       <licenses>
         <license>
@@ -2040,7 +2040,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-webservices-server-integration</artifactId>
       <licenses>
         <license>
@@ -2051,7 +2051,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-weld</artifactId>
       <licenses>
         <license>
@@ -2062,7 +2062,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-xts</artifactId>
       <licenses>
         <license>
@@ -2073,7 +2073,7 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.wildfly</groupId>
+      <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-rts</artifactId>
       <licenses>
         <license>

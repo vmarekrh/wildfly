@@ -28,9 +28,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.wildfly</groupId>
+        <groupId>org.jboss.eap</groupId>
         <artifactId>wildfly-batch-parent</artifactId>
-        <version>10.0.0.CR6-redhat-SNAPSHOT</version>
+        <version>7.0.0.ER4-redhat-SNAPSHOT</version>
     </parent>
 
     <artifactId>wildfly-batch</artifactId>
@@ -40,12 +40,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.wildfly</groupId>
+            <groupId>org.jboss.eap</groupId>
             <artifactId>wildfly-jberet</artifactId>
         </dependency>
         <!-- Used to inherit some stuff from the new subsystem -->
         <dependency>
-            <groupId>org.wildfly</groupId>
+            <groupId>org.jboss.eap</groupId>
             <artifactId>wildfly-batch-jberet</artifactId>
         </dependency>
         <dependency>
@@ -61,7 +61,7 @@
             <artifactId>wildfly-threads</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wildfly</groupId>
+            <groupId>org.jboss.eap</groupId>
             <artifactId>wildfly-transactions</artifactId>
         </dependency>
 

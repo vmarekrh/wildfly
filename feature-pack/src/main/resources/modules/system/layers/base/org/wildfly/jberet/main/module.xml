@@ -28,7 +28,7 @@
     </properties>
 
     <resources>
-        <artifact name="${org.wildfly:wildfly-jberet}"/>
+        <artifact name="${org.jboss.eap:wildfly-jberet}"/>
     </resources>
 
     <dependencies>
