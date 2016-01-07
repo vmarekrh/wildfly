@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.wildfly</groupId>
+        <groupId>org.jboss.eap</groupId>
         <artifactId>wildfly-testsuite</artifactId>
-        <version>10.0.0.CR6-redhat-SNAPSHOT</version>
+        <version>7.0.0.ER4-redhat-SNAPSHOT</version>
     </parent>
 
     <artifactId>wildfly-ts-integ</artifactId>
@@ -296,7 +296,7 @@
     <dependencies>
         <!-- Dependencies specific to the integration tests. -->
         <dependency>
-            <groupId>org.wildfly</groupId>
+            <groupId>org.jboss.eap</groupId>
             <artifactId>wildfly-webservices-tests-integration</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>

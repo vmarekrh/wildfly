@@ -28,9 +28,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.wildfly</groupId>
-        <artifactId>wildfly-parent</artifactId>
-        <version>10.0.0.CR6-redhat-SNAPSHOT</version>
+        <groupId>org.jboss.eap</groupId>
+        <artifactId>jboss-eap-parent</artifactId>
+        <version>7.0.0.ER4-redhat-SNAPSHOT</version>
     </parent>
 
     <artifactId>wildfly-build</artifactId>
@@ -40,7 +40,7 @@
 
 	<dependencies>
         <dependency>
-            <groupId>org.wildfly</groupId>
+            <groupId>org.jboss.eap</groupId>
             <artifactId>wildfly-feature-pack</artifactId>
             <type>zip</type>
             <exclusions>

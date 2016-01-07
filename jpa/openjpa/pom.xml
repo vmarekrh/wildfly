@@ -6,12 +6,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.wildfly</groupId>
+        <groupId>org.jboss.eap</groupId>
         <artifactId>wildfly-jpa-parent</artifactId>
-        <version>10.0.0.CR6-redhat-SNAPSHOT</version>
+        <version>7.0.0.ER4-redhat-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.wildfly</groupId>
+    <groupId>org.jboss.eap</groupId>
     <artifactId>jipijapa-openjpa</artifactId>
     
     <name>jipijapa OpenJPA integration</name>
@@ -21,7 +21,7 @@
         <!-- Internal -->
 
         <dependency>
-            <groupId>org.wildfly</groupId>
+            <groupId>org.jboss.eap</groupId>
             <artifactId>jipijapa-spi</artifactId>
         </dependency>
 

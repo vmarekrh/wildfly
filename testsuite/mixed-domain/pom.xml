@@ -27,9 +27,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.wildfly</groupId>
+        <groupId>org.jboss.eap</groupId>
         <artifactId>wildfly-testsuite</artifactId>
-        <version>10.0.0.CR6-redhat-SNAPSHOT</version>
+        <version>7.0.0.ER4-redhat-SNAPSHOT</version>
     </parent>
 
     <artifactId>wildfly-testsuite-integration-mixed-domain</artifactId>
@@ -69,7 +69,7 @@
             <artifactId>wildfly-subsystem-test-framework</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wildfly</groupId>
+            <groupId>org.jboss.eap</groupId>
             <artifactId>wildfly-testsuite-shared</artifactId>
             <exclusions>
                 <!-- exclude woodstox as it is doesn't work right with adding new lines after document end -->

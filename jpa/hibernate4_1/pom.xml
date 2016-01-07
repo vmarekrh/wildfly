@@ -6,9 +6,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.wildfly</groupId>
+        <groupId>org.jboss.eap</groupId>
         <artifactId>wildfly-jpa-parent</artifactId>
-        <version>10.0.0.CR6-redhat-SNAPSHOT</version>
+        <version>7.0.0.ER4-redhat-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -17,7 +17,7 @@
         <version.org.hibernate4_2.commons.annotations>4.0.1.Final</version.org.hibernate4_2.commons.annotations>
     </properties>    
 
-    <groupId>org.wildfly</groupId>
+    <groupId>org.jboss.eap</groupId>
     <artifactId>jipijapa-hibernate4-1</artifactId>
     <name>jipijapa Hibernate 4.1.x + 4.2.x (JPA 2.0) integration</name>
 
@@ -25,7 +25,7 @@
         <!-- Internal -->
 
         <dependency>
-            <groupId>org.wildfly</groupId>
+            <groupId>org.jboss.eap</groupId>
             <artifactId>jipijapa-spi</artifactId>
             <scope>provided</scope>
         </dependency>

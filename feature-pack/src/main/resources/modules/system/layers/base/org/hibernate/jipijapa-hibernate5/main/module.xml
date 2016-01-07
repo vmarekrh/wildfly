@@ -28,7 +28,7 @@
     </properties>
 
     <resources>
-        <artifact name="${org.wildfly:jipijapa-hibernate5}"/>
+        <artifact name="${org.jboss.eap:jipijapa-hibernate5}"/>
     </resources>
 
     <dependencies>
