@@ -8,7 +8,7 @@
     <parent>
         <groupId>org.jboss.eap</groupId>
         <artifactId>jboss-eap-parent</artifactId>
-        <version>7.0.0.ER4-redhat-SNAPSHOT</version>
+        <version>7.0.0.ER5-redhat-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
