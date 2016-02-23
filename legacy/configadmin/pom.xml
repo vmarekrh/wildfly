@@ -31,7 +31,7 @@
         <groupId>org.jboss.eap</groupId>
         <artifactId>jboss-eap-parent</artifactId>
         <relativePath>../../pom.xml</relativePath>
-        <version>7.0.0.ER6-redhat-SNAPSHOT</version>
+        <version>7.0.0.CR1-redhat-SNAPSHOT</version>
     </parent>
 
     <artifactId>wildfly-configadmin</artifactId>

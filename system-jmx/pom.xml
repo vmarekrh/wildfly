@@ -29,7 +29,7 @@
     <parent>
         <groupId>org.jboss.eap</groupId>
         <artifactId>jboss-eap-parent</artifactId>
-        <version>7.0.0.ER6-redhat-SNAPSHOT</version>
+        <version>7.0.0.CR1-redhat-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
