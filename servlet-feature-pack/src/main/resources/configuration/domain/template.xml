@@ -82,6 +82,9 @@
             <socket-binding-group ref="standard-sockets"/>
         </server-group>
         <server-group name="other-server-group" profile="default">
+            <jvm name="default">
+                <heap size="1000m" max-size="1000m"/>
+            </jvm>
             <socket-binding-group ref="standard-sockets"/>
         </server-group>
     </server-groups>
