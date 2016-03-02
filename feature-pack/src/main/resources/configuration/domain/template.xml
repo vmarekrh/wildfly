@@ -128,6 +128,20 @@
                 <extension module="org.wildfly.iiop-openjdk"/>
             </excluded-extensions>
         </host-exclude>
+        <host-exclude name="EAP64z">
+            <host-api-version major-version="1" minor-version="8"/>
+            <excluded-extensions>
+                <extension module="org.wildfly.extension.batch.jberet"/>
+                <extension module="org.wildfly.extension.bean-validation"/>
+                <extension module="org.wildfly.extension.clustering.singleton"/>
+                <extension module="org.wildfly.extension.io"/>
+                <extension module="org.wildfly.extension.messaging-activemq"/>
+                <extension module="org.wildfly.extension.request-controller"/>
+                <extension module="org.wildfly.extension.security.manager"/>
+                <extension module="org.wildfly.extension.undertow"/>
+                <extension module="org.wildfly.iiop-openjdk"/>
+            </excluded-extensions>
+        </host-exclude>
     </host-excludes>
 
 </domain>
