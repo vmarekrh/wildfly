@@ -68,7 +68,6 @@ public class Host implements Service<Host>, FilterLocation {
     private final Map<String, LocationService> locations = new CopyOnWriteMap<>();
     private final Map<String, AuthenticationMechanism> additionalAuthenticationMechanisms = new ConcurrentHashMap<>();
     private final HostRootHandler hostRootHandler = new HostRootHandler();
-    private volatile boolean ssoRegistered;
 
     private final DefaultResponseCodeHandler defaultHandler;
     protected Host(final String name, final List<String> aliases, final String defaultWebModule, final int defaultResponseCode ) {
@@ -273,14 +272,6 @@ public class Host implements Service<Host>, FilterLocation {
         if(this.defaultHandler != null){
             this.registerHandler("/", this.defaultHandler);
         }
-    }
-
-    public boolean isSsoRegistered() {
-        return ssoRegistered;
-    }
-
-    public void setSsoRegistered(boolean ssoRegistered) {
-        this.ssoRegistered = ssoRegistered;
     }
 
     private static final class OptionsHandler implements HttpHandler {
