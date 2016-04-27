@@ -23,17 +23,19 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="urn:jboss:service:7.0 jboss-service_7_0.xsd">
 
-    <mbean name="jboss:name=A" code="org.jboss.as.test.integration.sar.injection.pojos.A">
+    <mbean name="jboss:name=SourceBean" code="org.jboss.as.test.integration.sar.injection.valuefactory.SourceBean">
        <attribute name="count">2</attribute>
     </mbean>
 
-    <mbean name="jboss:name=POJOService" code="org.jboss.as.test.integration.sar.injection.pojos.POJOService">
-       <attribute name="a">
-          <inject bean="jboss:name=A"/>
+    <mbean name="jboss:name=TargetBean" code="org.jboss.as.test.integration.sar.injection.valuefactory.TargetBean">
+       <attribute name="sourceCount">
+          <value-factory bean="jboss:name=SourceBean" method="getCount"/>
        </attribute>
 
-        <attribute name="injectedCount">
-            <inject bean="jboss:name=A" property="count"/>
+        <attribute name="CountWithArgument">
+            <value-factory bean="jboss:name=SourceBean" method="getCount">
+                <parameter class="java.lang.String">4</parameter>
+            </value-factory>
         </attribute>
     </mbean>
 

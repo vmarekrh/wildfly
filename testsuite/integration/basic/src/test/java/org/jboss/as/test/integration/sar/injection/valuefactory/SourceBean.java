@@ -20,21 +20,22 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.as.test.integration.sar.injection.pojos;
+package org.jboss.as.test.integration.sar.injection.valuefactory;
 
-/**
- * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
- */
-public abstract class AbstractSetterMethodsA extends AbstractLifycycleMethodsA {
-    
+public class SourceBean implements SourceBeanMBean {
     private int count;
-    
-    public final void setCount(final int count) {
+
+    @Override
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
         this.count = count;
     }
 
-    public final int getCount() {
-        return this.count;
+    @Override
+    public int getCount(String count) {
+        return Integer.parseInt(count);
     }
-
 }
