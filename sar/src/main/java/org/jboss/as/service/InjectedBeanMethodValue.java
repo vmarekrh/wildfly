@@ -20,21 +20,31 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package org.jboss.as.test.integration.sar.injection.pojos;
+package org.jboss.as.service;
+
+import org.jboss.msc.value.Value;
+
+import java.lang.reflect.Method;
 
 /**
- * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
+ * Resolves the method on an injected bean using {@code MethodFinder}.
  */
-public abstract class AbstractSetterMethodsA extends AbstractLifycycleMethodsA {
-    
-    private int count;
-    
-    public final void setCount(final int count) {
-        this.count = count;
+public class InjectedBeanMethodValue implements Value<Method> {
+    private final Value<?> targetBeanValue;
+    private final MethodFinder methodFinder;
+
+    interface MethodFinder {
+        Method find(final Class<?> clazz);
     }
 
-    public final int getCount() {
-        return this.count;
+    public InjectedBeanMethodValue(Value<?> targetBeanValue, MethodFinder methodFinder) {
+        this.methodFinder = methodFinder;
+        this.targetBeanValue = targetBeanValue;
+    }
+
+    @Override
+    public Method getValue() throws IllegalStateException, IllegalArgumentException {
+        return methodFinder.find(targetBeanValue.getValue().getClass());
     }
 
 }
