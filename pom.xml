@@ -218,7 +218,11 @@
         <version.org.syslog4j>0.9.30</version.org.syslog4j>
         <version.org.wildfly.build-tools>1.1.3.Final</version.org.wildfly.build-tools>
         <version.org.wildfly.checkstyle-config>1.0.4.Final</version.org.wildfly.checkstyle-config>
+<<<<<<< HEAD
         <version.org.wildfly.core>2.2.0.CR7-redhat-1</version.org.wildfly.core>
+=======
+        <version.org.wildfly.core>3.0.0.Alpha4-SNAPSHOT</version.org.wildfly.core>
+>>>>>>> f58caeb... Upgrade WildFly Core to 3.0.0.Alpha4
         <version.org.wildfly.arquillian>1.0.2.Final</version.org.wildfly.arquillian>
         <version.org.yaml.snakeyaml>1.15.0.redhat-1</version.org.yaml.snakeyaml>
         <version.sun.jaxb>2.2.11.redhat-4</version.sun.jaxb>
