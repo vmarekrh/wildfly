@@ -340,6 +340,23 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
+            <plugin>
+              <groupId>org.commonjava.maven.plugins</groupId>
+              <artifactId>project-sources-maven-plugin</artifactId>
+              <version>1.0</version>
+              <executions>
+                <execution>
+                  <id>project-sources-archive</id>
+                  <phase>initialize</phase>
+                  <goals>
+                    <goal>archive</goal>
+                   </goals>
+                </execution>
+              </executions>
+              <configuration>
+                <assemblyRootFolder>jboss-eap-${jboss.eap.release.version}-src</assemblyRootFolder>
+              </configuration>
+            </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
