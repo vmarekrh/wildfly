@@ -123,6 +123,7 @@ abstract class ListenerResourceDefinition extends PersistentResourceDefinition {
             .setFlags(AttributeAccess.Flag.RESTART_RESOURCE_SERVICES)
             .setAllowExpression(true)
             .build();
+
     protected static final SimpleAttributeDefinition SECURE = new SimpleAttributeDefinitionBuilder(Constants.SECURE, ModelType.BOOLEAN)
             .setDefaultValue(new ModelNode(false))
             .setAllowNull(true)
