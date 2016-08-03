@@ -41,6 +41,7 @@ import org.jboss.msc.service.StartException;
 import org.jboss.msc.service.StopContext;
 import org.jboss.msc.value.InjectedValue;
 import org.wildfly.security.manager.WildFlySecurityManager;
+
 import javax.resource.spi.XATerminator;
 import javax.transaction.NotSupportedException;
 import javax.transaction.SystemException;
@@ -70,7 +71,6 @@ public class EJBRemoteTransactionsRepository implements Service<EJBRemoteTransac
     private final InjectedValue<RecoveryManagerService> recoveryManagerService = new InjectedValue<>();
 
     private final Map<UserTransactionID, Uid> userTransactions = Collections.synchronizedMap(new HashMap<UserTransactionID, Uid>());
-
 
     private static final Xid[] NO_XIDS = new Xid[0];
     private static final boolean RECOVER_IN_FLIGHT;
