@@ -76,6 +76,6 @@ rem set "DEBUG_PORT=8787"
 rem enable garbage collection logging if not set in environment differently
 if "x%GC_LOG%" == "x" (
   set "GC_LOG=true"
-else
+) else (
   echo "GC_LOG set in environment to %GC_LOG%"
-fi
+)
