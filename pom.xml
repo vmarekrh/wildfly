@@ -93,7 +93,7 @@
         <version.com.sun.istack>2.21.0.redhat-1</version.com.sun.istack>
         <version.com.sun.xml.fastinfoset>1.2.13.redhat-1</version.com.sun.xml.fastinfoset>
         <version.com.sun.xsom>20140925.0.0.redhat-1</version.com.sun.xsom>
-        <version.commons-beanutils>1.9.2.redhat-1</version.commons-beanutils>
+        <version.commons-beanutils>1.9.2.redhat-2</version.commons-beanutils>
         <version.commons-cli>1.2.0.redhat-10</version.commons-cli>
         <version.commons-codec>1.10.0.redhat-5</version.commons-codec>
         <version.commons-collections>3.2.2.redhat-2</version.commons-collections>
@@ -172,7 +172,7 @@
         <version.org.jboss.resteasy>3.0.19.Final-redhat-1</version.org.jboss.resteasy>
         <version.org.jboss.seam.int>7.0.0.GA-redhat-2</version.org.jboss.seam.int>
         <version.org.jboss.security.jboss-negotiation>3.0.3.Final-redhat-1</version.org.jboss.security.jboss-negotiation>
-        <version.org.jboss.security.jbossxacml>2.0.8.Final-redhat-6</version.org.jboss.security.jbossxacml>
+        <version.org.jboss.security.jbossxacml>2.0.8.Final-redhat-7</version.org.jboss.security.jbossxacml>
         <version.org.jboss.shrinkwrap.shrinkwrap>1.1.2</version.org.jboss.shrinkwrap.shrinkwrap>
         <!-- only needed here until wildfly-arquillian has this version properly synced with arquillian itslef  -->
         <version.org.jboss.shrinkwrap.descriptors>2.0.0-alpha-8</version.org.jboss.shrinkwrap.descriptors>
@@ -211,7 +211,7 @@
         <version.org.jgroups.azure>1.0.0.Final-redhat-1</version.org.jgroups.azure>
         <version.org.jipijapa>1.0.1.Final</version.org.jipijapa>
         <version.org.opensaml.opensaml>3.1.1.redhat-1</version.org.opensaml.opensaml>
-        <version.org.picketbox.picketbox-commons>1.0.0.final-redhat-4</version.org.picketbox.picketbox-commons>
+        <version.org.picketbox.picketbox-commons>1.0.0.final-redhat-5</version.org.picketbox.picketbox-commons>
         <version.org.picketlink>2.5.5.SP3-redhat-1</version.org.picketlink>
         <version.org.picketlink.picketlink-wildfly8>2.5.5.SP3-redhat-1</version.org.picketlink.picketlink-wildfly8>
         <version.org.slf4j>1.7.7.redhat-3</version.org.slf4j>
