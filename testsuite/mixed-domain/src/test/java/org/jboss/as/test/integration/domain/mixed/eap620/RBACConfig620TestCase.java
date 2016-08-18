@@ -18,7 +18,6 @@ package org.jboss.as.test.integration.domain.mixed.eap620;
 
 import org.jboss.as.test.integration.domain.mixed.RBACConfigTestCase;
 import org.jboss.as.test.integration.domain.mixed.Version;
-import org.jboss.as.test.integration.domain.mixed.eap630.KernelBehavior630TestSuite;
 import org.junit.BeforeClass;
 
 /**
