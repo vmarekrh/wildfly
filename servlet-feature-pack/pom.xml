@@ -368,6 +368,11 @@
         </dependency>
 
         <dependency>
+            <groupId>org.wildfly.security</groupId>
+            <artifactId>elytron-subsystem</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>xalan</groupId>
             <artifactId>serializer</artifactId>
         </dependency>
