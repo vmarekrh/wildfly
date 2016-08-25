@@ -3119,4 +3119,7 @@ public interface EjbLogger extends BasicLogger {
             "As a result the 'default-sfsb-cache' attribute has been set to '%s' and the " +
             "'default-sfsb-passivation-disabled-cache' attribute has been set to '%s'.")
     void remappingCacheAttributes(String address, ModelNode defClustered, ModelNode passivationDisabled);
+
+    @Message(id = 487, value = "Unauthenticated (anonymous) access to this EJB method is not authorized")
+    SecurityException ejbAuthenticationRequired();
 }
