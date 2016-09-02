@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.jboss.as.controller.AbstractRuntimeOnlyHandler;
-import org.jboss.as.controller.AttributeDefinition;
 import org.jboss.as.controller.OperationContext;
 import org.jboss.as.controller.OperationFailedException;
 import org.jboss.as.controller.PathAddress;
@@ -68,8 +67,6 @@ class SecurityDomainResourceDefinition extends SimpleResourceDefinition {
             .setAllowedValues("default", "infinispan")
             .build();
 
-    public static final AttributeDefinition[] ATTRIBUTES = new AttributeDefinition[] {CACHE_TYPE};
-
     private final boolean registerRuntimeOnly;
     private final List<AccessConstraintDefinition> accessConstraints;
 
@@ -86,7 +83,7 @@ class SecurityDomainResourceDefinition extends SimpleResourceDefinition {
 
     @Override
     public void registerAttributes(final ManagementResourceRegistration resourceRegistration) {
-        resourceRegistration.registerReadWriteAttribute(CACHE_TYPE, null, new SecurityDomainReloadWriteHandler(ATTRIBUTES));
+        resourceRegistration.registerReadWriteAttribute(CACHE_TYPE, null, new SecurityDomainReloadWriteHandler(CACHE_TYPE));
     }
 
     @Override
