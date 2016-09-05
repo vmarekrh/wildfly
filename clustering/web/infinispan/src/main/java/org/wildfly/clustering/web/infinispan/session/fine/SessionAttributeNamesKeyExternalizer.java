@@ -17,24 +17,19 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 2110-1301 USA, or see the FSF site: http://www.fsf.org.
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+package org.wildfly.clustering.web.infinispan.session.fine;
 
-package org.wildfly.clustering.web.undertow.logging;
+import org.wildfly.clustering.web.infinispan.SessionKeyExternalizer;
 
-import org.jboss.logging.BasicLogger;
-import org.jboss.logging.Logger;
-import org.jboss.logging.annotations.Message;
-import org.jboss.logging.annotations.MessageLogger;
+/**
+ * Externalizer for {@link SessionAttributeNamesKey}.
+ * @author Paul Ferraro
+ */
+public class SessionAttributeNamesKeyExternalizer extends SessionKeyExternalizer<SessionAttributeNamesKey> {
 
-@MessageLogger(projectCode = "WFLYCLWEBUT", length = 4)
-public interface UndertowClusteringLogger extends BasicLogger {
-
-    UndertowClusteringLogger ROOT_LOGGER = Logger.getMessageLogger(UndertowClusteringLogger.class, "org.wildfly.clustering.web.undertow");
-
-    @Message(id = 1, value = "Session %s is invalid")
-    IllegalStateException sessionIsInvalid(String sessionId);
-
-    @Message(id = 2, value = "Session %s already exists")
-    IllegalStateException sessionAlreadyExists(String sessionId);
+    public SessionAttributeNamesKeyExternalizer() {
+        super(SessionAttributeNamesKey.class, SessionAttributeNamesKey::new);
+    }
 }
