@@ -47,7 +47,7 @@
         </audit-log>
         <management-interfaces>
             <http-interface security-realm="ManagementRealm">
-                <http-upgrade enabled="true"/>
+                <http-upgrade enabled="true" />
                 <socket-binding http="management-http"/>
             </http-interface>
         </management-interfaces>
