@@ -60,6 +60,7 @@ import io.undertow.servlet.api.WebResourceCollection;
 import io.undertow.servlet.handlers.DefaultServlet;
 import io.undertow.servlet.handlers.ServletPathMatches;
 import io.undertow.servlet.util.ImmediateInstanceFactory;
+import io.undertow.websockets.extensions.PerMessageDeflateHandshake;
 import io.undertow.websockets.jsr.ServerWebSocketContainer;
 import io.undertow.websockets.jsr.WebSocketDeploymentInfo;
 
@@ -994,6 +995,11 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
                 webSocketDeploymentInfo.setBuffers(servletContainer.getWebsocketsBufferPool().getValue());
                 webSocketDeploymentInfo.setWorker(servletContainer.getWebsocketsWorker().getValue());
                 webSocketDeploymentInfo.setDispatchToWorkerThread(servletContainer.isDispatchWebsocketInvocationToWorker());
+
+                if(servletContainer.isPerMessageDeflate()) {
+                    webSocketDeploymentInfo.addExtension(new PerMessageDeflateHandshake(false, servletContainer.getDeflaterLevel()));
+                }
+
                 final AtomicReference<ServerActivity> serverActivity = new AtomicReference<>();
                 webSocketDeploymentInfo.addListener(wsc -> {
                     serverActivity.set(new ServerActivity() {
