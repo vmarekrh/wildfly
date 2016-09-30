@@ -36,9 +36,9 @@ import org.jboss.msc.value.InjectedValue;
  * @author Tomaz Cerar (c) 2014 Red Hat Inc.
  * @author Paul Ferraro
  */
-class SingleSignOnService implements Service<SingleSignOnService> {
+public class SingleSignOnService implements Service<SingleSignOnService> {
 
-    private static final String AUTHENTICATION_MECHANISM_NAME = "SSO";
+    public static final String AUTHENTICATION_MECHANISM_NAME = "SSO";
 
     private final String domain;
     private final String path;
@@ -65,12 +65,10 @@ class SingleSignOnService implements Service<SingleSignOnService> {
         mechanism.setSecure(this.secure);
         mechanism.setCookieName(this.cookieName);
         this.host.getValue().registerAdditionalAuthenticationMechanism(AUTHENTICATION_MECHANISM_NAME, mechanism);
-        this.host.getValue().setSsoRegistered(true);
     }
 
     @Override
     public void stop(StopContext stopContext) {
-        this.host.getValue().setSsoRegistered(false);
         this.host.getValue().unregisterAdditionalAuthenticationMechanism(AUTHENTICATION_MECHANISM_NAME);
     }
 
