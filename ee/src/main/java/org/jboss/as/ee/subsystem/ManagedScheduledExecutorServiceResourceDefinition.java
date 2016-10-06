@@ -121,12 +121,7 @@ public class ManagedScheduledExecutorServiceResourceDefinition extends SimpleRes
     public static final ManagedScheduledExecutorServiceResourceDefinition INSTANCE = new ManagedScheduledExecutorServiceResourceDefinition();
 
     private ManagedScheduledExecutorServiceResourceDefinition() {
-        super(new SimpleResourceDefinition.Parameters(PathElement.pathElement(EESubsystemModel.MANAGED_SCHEDULED_EXECUTOR_SERVICE),
-                EeExtension.getResourceDescriptionResolver(EESubsystemModel.MANAGED_SCHEDULED_EXECUTOR_SERVICE))
-                .setAddHandler(ManagedScheduledExecutorServiceAdd.INSTANCE)
-                .setRemoveHandler(ManagedScheduledExecutorServiceRemove.INSTANCE)
-                .setCapabilities(Capabilities.CONTROLLED_SCHEDULED_TASK_MANAGER_CAPABILITY)
-        );
+        super(PathElement.pathElement(EESubsystemModel.MANAGED_SCHEDULED_EXECUTOR_SERVICE), EeExtension.getResourceDescriptionResolver(EESubsystemModel.MANAGED_SCHEDULED_EXECUTOR_SERVICE), ManagedScheduledExecutorServiceAdd.INSTANCE, ManagedScheduledExecutorServiceRemove.INSTANCE);
     }
 
     @Override

@@ -67,7 +67,7 @@ public class EEConcurrencySuspendTestCase {
     public static WebArchive deployment() {
 
         WebArchive war = ShrinkWrap.create(WebArchive.class, "ee-suspend.war");
-        war.addClasses(EEConcurrencySuspendTestCase.class, ShutdownServlet.class);
+        war.addPackage(EEConcurrencySuspendTestCase.class.getPackage());
         war.addPackage(HttpRequest.class.getPackage());
         war.addClass(TestSuiteEnvironment.class);
         war.addAsResource(new StringAsset("Dependencies: org.jboss.dmr, org.jboss.as.controller\n"), "META-INF/MANIFEST.MF");
