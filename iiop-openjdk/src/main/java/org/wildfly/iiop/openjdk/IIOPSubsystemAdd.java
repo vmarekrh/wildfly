@@ -28,6 +28,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 
+import org.jboss.as.controller.AbstractAddStepHandler;
 import org.jboss.as.controller.AttributeDefinition;
 import org.jboss.as.controller.OperationContext;
 import org.jboss.as.controller.OperationFailedException;
@@ -68,7 +69,6 @@ import org.wildfly.iiop.openjdk.service.IORSecConfigMetaDataService;
 import org.wildfly.security.manager.WildFlySecurityManager;
 
 import com.sun.corba.se.impl.orbutil.ORBConstants;
-import org.jboss.as.controller.AbstractBoottimeAddStepHandler;
 
 /**
  * <p>
@@ -85,7 +85,7 @@ import org.jboss.as.controller.AbstractBoottimeAddStepHandler;
  * @author <a href="mailto:sguilhen@redhat.com">Stefan Guilhen</a>
  * @author <a href="mailto:tadamski@redhat.com">Tomasz Adamski</a>
  */
-public class IIOPSubsystemAdd extends AbstractBoottimeAddStepHandler {
+public class IIOPSubsystemAdd extends AbstractAddStepHandler {
 
 //    static final IIOPSubsystemAdd INSTANCE = new IIOPSubsystemAdd();
 //
@@ -100,7 +100,7 @@ public class IIOPSubsystemAdd extends AbstractBoottimeAddStepHandler {
             "security-domain");
 
     @Override
-    protected void performBoottime(final OperationContext context, final ModelNode operation, final ModelNode model) throws OperationFailedException {
+    protected void performRuntime(final OperationContext context, final ModelNode operation, final ModelNode model) throws OperationFailedException {
 
         // This needs to run after all child resources so that they can detect a fresh state
         context.addStep(new OperationStepHandler() {
