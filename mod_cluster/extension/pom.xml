@@ -89,7 +89,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.wildfly</groupId>
+            <groupId>org.jboss.eap</groupId>
             <artifactId>wildfly-clustering-common</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
