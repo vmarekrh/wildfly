@@ -22,24 +22,23 @@
 
 package org.jboss.as.test.integration.naming.remote.simple;
 
-import java.net.URI;
-import java.util.Properties;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.as.arquillian.api.ContainerResource;
 import org.jboss.as.arquillian.container.ManagementClient;
-import org.wildfly.naming.java.permission.JndiPermission;
-import org.jboss.as.test.shared.integration.ejb.security.CallbackHandler;
+import org.jboss.as.test.integration.common.DefaultConfiguration;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.wildfly.naming.java.permission.JndiPermission;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import java.net.URI;
+import java.util.Properties;
 
 import static org.jboss.as.test.shared.integration.ejb.security.PermissionUtils.createPermissionsXmlAsset;
 import static org.junit.Assert.assertEquals;
@@ -74,8 +73,7 @@ public class RemoteNamingTestCase {
         URI namingUri = new URI("http-remoting", webUri.getUserInfo(), webUri.getHost(), webUri.getPort(), "", "" ,"");
         env.put(Context.PROVIDER_URL, namingUri.toString());
         env.put("jboss.naming.client.connect.options.org.xnio.Options.SASL_POLICY_NOPLAINTEXT", "false");
-        env.put("jboss.naming.client.security.callback.handler.class", CallbackHandler.class.getName());
-        return new InitialContext(env);
+        return new InitialContext(DefaultConfiguration.addSecurityProperties(env));
     }
 
     @Test
