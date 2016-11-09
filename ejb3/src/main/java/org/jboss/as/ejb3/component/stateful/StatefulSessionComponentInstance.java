@@ -89,7 +89,8 @@ public class StatefulSessionComponentInstance extends SessionBeanComponentInstan
     private final AtomicInteger invocationSynchState = new AtomicInteger();
     public static final int SYNC_STATE_NO_INVOCATION = 0;
     public static final int SYNC_STATE_INVOCATION_IN_PROGRESS = 1;
-    public static final int SYNC_STATE_AFTER_COMPLETE_DELAYED = 2;
+    public static final int SYNC_STATE_AFTER_COMPLETE_DELAYED_NO_COMMIT = 2;
+    public static final int SYNC_STATE_AFTER_COMPLETE_DELAYED_COMMITTED = 3;
 
     private boolean removed = false;
 

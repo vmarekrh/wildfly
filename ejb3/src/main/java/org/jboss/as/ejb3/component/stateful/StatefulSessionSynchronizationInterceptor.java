@@ -40,7 +40,8 @@ import org.jboss.invocation.InterceptorFactoryContext;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.jboss.as.ejb3.component.stateful.StatefulSessionComponentInstance.SYNC_STATE_AFTER_COMPLETE_DELAYED;
+import static org.jboss.as.ejb3.component.stateful.StatefulSessionComponentInstance.SYNC_STATE_AFTER_COMPLETE_DELAYED_COMMITTED;
+import static org.jboss.as.ejb3.component.stateful.StatefulSessionComponentInstance.SYNC_STATE_AFTER_COMPLETE_DELAYED_NO_COMMIT;
 import static org.jboss.as.ejb3.component.stateful.StatefulSessionComponentInstance.SYNC_STATE_INVOCATION_IN_PROGRESS;
 import static org.jboss.as.ejb3.component.stateful.StatefulSessionComponentInstance.SYNC_STATE_NO_INVOCATION;
 import static org.jboss.as.ejb3.logging.EjbLogger.ROOT_LOGGER;
@@ -158,10 +159,10 @@ public class StatefulSessionSynchronizationInterceptor extends AbstractEJBInterc
                     int state = invocationSyncState.get();
                     if(state == SYNC_STATE_INVOCATION_IN_PROGRESS && invocationSyncState.compareAndSet(SYNC_STATE_INVOCATION_IN_PROGRESS, SYNC_STATE_NO_INVOCATION)) {
                         break;
-                    } else if (state == SYNC_STATE_AFTER_COMPLETE_DELAYED) {
+                    } else if (state == SYNC_STATE_AFTER_COMPLETE_DELAYED_COMMITTED || state == SYNC_STATE_AFTER_COMPLETE_DELAYED_NO_COMMIT) {
                         try {
-                            //we know the transaction did not commit, as we are still active in the tx, this only happens through timeout
-                            handleAfterComplection(false, instance, toDiscard);
+                            //invoke the after completion method, other after completion syncs may have already run
+                            handleAfterCompletion(state == SYNC_STATE_AFTER_COMPLETE_DELAYED_COMMITTED, instance, toDiscard);
                         } finally {
                             invocationSyncState.set(SYNC_STATE_NO_INVOCATION);
                         }
@@ -210,9 +211,7 @@ public class StatefulSessionSynchronizationInterceptor extends AbstractEJBInterc
      */
     static void releaseLock(final StatefulSessionComponentInstance instance) {
         instance.getLock().unlock(getLockOwner(instance.getComponent().getTransactionSynchronizationRegistry()));
-        if (ROOT_LOGGER.isTraceEnabled()) {
-            ROOT_LOGGER.tracef("Released lock: %s", instance.getLock());
-        }
+        ROOT_LOGGER.tracef("Released lock: %s", instance.getLock());
     }
 
     private static class Factory extends ComponentInstanceInterceptorFactory {
@@ -241,10 +240,8 @@ public class StatefulSessionSynchronizationInterceptor extends AbstractEJBInterc
         @Override
         public void beforeCompletion() {
             try {
-                if (ROOT_LOGGER.isTraceEnabled()) {
-                    ROOT_LOGGER.trace("Before completion callback invoked on Transaction synchronization: " + this +
-                            " of stateful component instance: " + statefulSessionComponentInstance);
-                }
+                ROOT_LOGGER.tracef("Before completion callback invoked on Transaction synchronization: %s of stateful component instance: %s" , this, statefulSessionComponentInstance);
+
                 if (!statefulSessionComponentInstance.isDiscarded()) {
                     statefulSessionComponentInstance.beforeCompletion();
                 }
@@ -256,23 +253,22 @@ public class StatefulSessionSynchronizationInterceptor extends AbstractEJBInterc
         @Override
         public void afterCompletion(int status) {
             AtomicInteger state = statefulSessionComponentInstance.getInvocationSynchState();
+            final boolean committed = status == Status.STATUS_COMMITTED;
             for(;;) {
                 int s = state.get();
                 if(s == SYNC_STATE_NO_INVOCATION) {
-                    boolean committed = status == Status.STATUS_COMMITTED;
-                    handleAfterComplection(committed, statefulSessionComponentInstance, false);
+                    handleAfterCompletion(committed, statefulSessionComponentInstance, false);
                     break;
-                } else if(s == SYNC_STATE_INVOCATION_IN_PROGRESS && state.compareAndSet(SYNC_STATE_INVOCATION_IN_PROGRESS, SYNC_STATE_AFTER_COMPLETE_DELAYED)) {
+                } else if(s == SYNC_STATE_INVOCATION_IN_PROGRESS  && state.compareAndSet(SYNC_STATE_INVOCATION_IN_PROGRESS, committed ? SYNC_STATE_AFTER_COMPLETE_DELAYED_COMMITTED : SYNC_STATE_AFTER_COMPLETE_DELAYED_NO_COMMIT)) {
                     break;
                 }
             }
         }
     }
-    static void handleAfterComplection(boolean committed, StatefulSessionComponentInstance statefulSessionComponentInstance, boolean toDiscard) {
+    static void handleAfterCompletion(boolean committed, StatefulSessionComponentInstance statefulSessionComponentInstance, boolean toDiscard) {
         try {
-            if (ROOT_LOGGER.isTraceEnabled()) {
-                ROOT_LOGGER.trace("After completion callback invoked on Transaction synchronization:" + statefulSessionComponentInstance);
-            }
+            ROOT_LOGGER.tracef("After completion callback invoked on Transaction synchronization: %s", statefulSessionComponentInstance);
+
             if (!statefulSessionComponentInstance.isDiscarded() && !toDiscard) {
                 statefulSessionComponentInstance.afterCompletion(committed);
             }
