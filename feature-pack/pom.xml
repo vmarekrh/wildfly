@@ -2301,6 +2301,16 @@
         </dependency>
         <dependency>
             <groupId>org.jboss.eap</groupId>
+            <artifactId>wildfly-clustering-marshalling-infinispan</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.eap</groupId>
             <artifactId>wildfly-clustering-marshalling-jboss</artifactId>
             <exclusions>
                 <exclusion>
