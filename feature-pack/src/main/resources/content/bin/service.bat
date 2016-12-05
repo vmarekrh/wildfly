@@ -1,9 +1,5 @@
 @echo off
 
-REM JBoss, the OpenSource webOS
-REM
-REM Distributable under LGPL license.
-REM See terms of license at gnu.org.
 REM -------------------------------------------------------------------------
 REM  Red Hat JBoss EAP 7 Service Script for Windows
 REM    It has to reside in %JBOSS_HOME%\bin
@@ -11,6 +7,7 @@ REM    It is expecting that prunsrv.exe reside in one of:
 REM      %JBOSS_HOME%\bin
 REM      %JBOSS_HOME%\..\jbcs-jsvc-1.0\sbin
 REM
+REM  v9 2016-02-16 customize for WildFly, fix working on paths with spaces (Tomaz Cerar)
 REM  v8 2016-01-20 customize for EAP 7 (Petr Sakar)
 REM  v7 2014-07-09 added /logpath /startup /config /hostconfig /base /debug
 REM                      simplified/corrected use of quotes
@@ -41,12 +38,16 @@ if "%DEBUG%" == "1" (
 
 set "DIRNAME=%~dp0%"
 if "%DEBUG%" == "1" (
-	echo DIRNAME %DIRNAME%x
+	echo DIRNAME "%DIRNAME%x"
 )
 
 if exist "%DIRNAME%..\jboss-modules.jar" (
   REM we are in JBOSS_HOME/bin
   set "WE=%DIRNAME%..\"
+  goto :WE_FOUND
+) else if exist "%DIRNAME%..\..\jboss-modules.jar" (
+  REM we are in bin\service in a WildFly installation
+  set "WE=%DIRNAME%..\..\"
   goto :WE_FOUND
 ) else if exist "%DIRNAME%..\..\..\jboss-modules.jar" (
   REM we are in sbin in a 6.0.x installation
@@ -63,15 +64,13 @@ if "%DEBUG%" == "1" (
 
 :WE_FOUND
 if "%DEBUG%" == "1" (
-	echo WE %WE%
+	echo WE "%WE%"
 )
-
 pushd "%WE%"
 set "RESOLVED_JBOSS_HOME=%CD%"
 popd
 set WE=
 set DIRNAME=
-
 if "x%JBOSS_HOME%" == "x" (
   set "JBOSS_HOME=%RESOLVED_JBOSS_HOME%"
 )
@@ -81,9 +80,9 @@ set "SANITIZED_JBOSS_HOME=%CD%"
 popd
 
 if "%DEBUG%" == "1" (
-	echo SANITIZED_JBOSS_HOME=%SANITIZED_JBOSS_HOME%
-	echo RESOLVED_JBOSS_HOME=%RESOLVED_JBOSS_HOME%
-	echo JBOSS_HOME=%JBOSS_HOME%
+	echo SANITIZED_JBOSS_HOME="%SANITIZED_JBOSS_HOME%"
+	echo RESOLVED_JBOSS_HOME="%RESOLVED_JBOSS_HOME%"
+	echo JBOSS_HOME="%JBOSS_HOME%"
 )
 
 if not "%RESOLVED_JBOSS_HOME%x" == "%SANITIZED_JBOSS_HOME%x" (
@@ -93,7 +92,7 @@ if not "%RESOLVED_JBOSS_HOME%x" == "%SANITIZED_JBOSS_HOME%x" (
 
 rem Find jboss-modules.jar to check JBOSS_HOME
 if not exist "%JBOSS_HOME%\jboss-modules.jar" (
-  echo Could not locate %JBOSS_HOME%\jboss-modules.jar
+  echo Could not locate "%JBOSS_HOME%\jboss-modules.jar"
   goto cmdEnd
 )
 
@@ -158,8 +157,8 @@ echo(
 echo     /controller ^<host:port^>   : The host:port of the management interface.
 echo                                 default: %CONTROLLER%
 echo(
-echo     /host [^<domainhost^>]      : Indicates that domain mode is to be used with an
-echo                                 optional domain controller name.
+echo     /host [^<domainhost^>]      : Indicates that domain mode is to be used,
+echo                                 with an optional domain/host controller name.
 echo                                 default: %DC_HOST%
 echo                                 Not specifying /host will install JBoss in
 echo                                 standalone mode.
@@ -167,7 +166,7 @@ echo(
 echo Options to use when multiple services or different accounts are needed:
 echo(
 echo     /name ^<servicename^>       : The name of the service
-echo(                                 
+echo(
 echo                                 default: %SHORTNAME%
 echo     /desc ^<description^>       : The description of the service, use double
 echo                                 quotes to allow spaces.
@@ -205,8 +204,8 @@ echo                                   %JBOSS_HOME%\standalone\log
 echo(
 echo     /debug                    : run the service install in debug mode
 echo(
-echo Other commands:	
-echo(	
+echo Other commands:
+echo(
 echo   service uninstall [/name ^<servicename^>]
 echo   service start [/name ^<servicename^>]
 echo   service stop [/name ^<servicename^>]
@@ -282,7 +281,7 @@ if /I "%~1"== "/base" (
 )
 if /I "%~1"== "/controller" (
   set CONTROLLER=
-  if not "%~2"=="" (  
+  if not "%~2"=="" (
     set T=%~2
     if not "!T:~0,1!"=="/" (
       set CONTROLLER=%~2
@@ -409,7 +408,7 @@ if /I "%~1"== "/host" (
 if /I "%~1"== "/loglevel" (
   if /I not "%~2"=="Error" if /I not "%~2"=="Info" if /I not "%~2"=="Warn" if /I not "%~2"=="Debug" (
     echo ERROR: /loglevel must be set to Error, Info, Warn or Debug ^(Case insensitive^)
-    goto endBatch      
+    goto endBatch
   )
   set LOGLEVEL=%~2
   shift
@@ -452,7 +451,7 @@ if not "%SERVICE_USER%" == "" (
     echo When specifying a user, you need to specify the password
     goto endBatch
   )
-  set RUNAS=--ServiceUser=%SERVICE_USER% --ServicePassword=%SERVICE_PASS%
+  set RUNAS=--ServiceUser="%SERVICE_USER%" --ServicePassword="%SERVICE_PASS%"
 )
 
 if "%STDOUT%"=="" set STDOUT=auto
@@ -464,7 +463,7 @@ if "%STOP_PATH%"=="" set STOP_PATH="%JBOSS_HOME%\bin"
 if "%STOP_SCRIPT%"=="" set STOP_SCRIPT=jboss-cli.bat
 
 if /I "%IS_DOMAIN%" == "true" (
-  if "%BASE%"=="" set BASE="%JBOSS_HOME%\domain"
+  if "%BASE%"=="" set "BASE=%JBOSS_HOME%\domain"
   if "%CONFIG%"=="" set CONFIG=domain.xml
   if "%START_SCRIPT%"=="" set START_SCRIPT=domain.bat
   set STARTPARAM="/c#set#NOPAUSE=Y#&&#!START_SCRIPT!#-Djboss.domain.base.dir=!BASE!#--domain-config=!CONFIG!#--host-config=!HOSTCONFIG!"
@@ -480,37 +479,38 @@ if /I "%IS_DOMAIN%" == "true" (
 if "%LOGPATH%"=="" set LOGPATH="!BASE!\log"
 
 if not exist "%BASE%" (
-  echo The base directory does not exist: %BASE%
+  echo The base directory does not exist: "%BASE%"
   goto endBatch
 )
 
 if not exist "%BASE%\configuration\%CONFIG%" (
-  echo The configuration does not exist: %BASE%\configuration\%CONFIG%
+  echo The configuration does not exist: "%BASE%\configuration\%CONFIG%"
   goto endBatch
 )
 
 if /I "%ISDEBUG%" == "true" (
-  echo JBOSS_HOME=%JBOSS_HOME%
+  echo JBOSS_HOME="%JBOSS_HOME%"
   echo RUNAS=%RUNAS%
-  echo SHORTNAME=%SHORTNAME%
-  echo DESCRIPTION=%DESCRIPTION%
+  echo SHORTNAME="%SHORTNAME%"
+  echo DESCRIPTION="%DESCRIPTION%"
   echo STARTPARAM=%STARTPARAM%
   echo STOPPARAM=%STOPPARAM%
   echo LOGLEVEL=%LOGLEVEL%
   echo LOGPATH=%LOGPATH%
   echo CREDENTIALS=%CREDENTIALS%
-  echo BASE=%BASE%
-  echo CONFIG=%CONFIG%
+  echo BASE="%BASE%"
+  echo CONFIG="%CONFIG%"
   echo START_SCRIPT=%START_SCRIPT%
   echo START_PATH=%START_PATH%
   echo STOP_SCRIPT=%STOP_SCRIPT%
   echo STOP_PATH=%STOP_PATH%
-  echo STDOUT=%STDOUT%
-  echo STDERR=%STDERR%
+  echo STDOUT="%STDOUT%"
+  echo STDERR="%STDERR%"
 )
 if /I "%ISDEBUG%" == "true" (
   @echo on
 )
+
 @rem quotes around the "%DESCRIPTION%" but nowhere else
 echo %PRUNSRV% install %SHORTNAME% %RUNAS% --DisplayName=%DISPLAYNAME% --Description="%DESCRIPTION%" --LogLevel=%LOGLEVEL% --LogPath=%LOGPATH% --LogPrefix=service --StdOutput=%STDOUT% --StdError=%STDERR% --StartMode=exe --Startup=%STARTUP_MODE% --StartImage=cmd.exe --StartPath=%START_PATH% ++StartParams=%STARTPARAM% --StopMode=exe --StopImage=cmd.exe --StopPath=%STOP_PATH%  ++StopParams=%STOPPARAM%
 
@@ -540,7 +540,7 @@ if /I "%~1"=="/name" (
   if not "%~2"=="" (
     set SHORTNAME="%~2"
   )
-) 
+)
 %PRUNSRV% stop %SHORTNAME%
 if errorlevel 0 (
   %PRUNSRV% delete %SHORTNAME%
