@@ -988,6 +988,16 @@
             </dependency>
             <dependency>
                 <groupId>org.jboss.eap</groupId>
+                <artifactId>wildfly-clustering-marshalling-spi</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.eap</groupId>
+                <artifactId>wildfly-clustering-marshalling-infinispan</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.eap</groupId>
                 <artifactId>wildfly-clustering-marshalling-jboss</artifactId>
                 <version>${project.version}</version>
             </dependency>
