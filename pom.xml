@@ -219,8 +219,8 @@
         <version.org.wildfly.checkstyle-config>1.0.5.Final</version.org.wildfly.checkstyle-config>
         <version.org.wildfly.core>3.0.0.Alpha14</version.org.wildfly.core>
         <version.org.wildfly.arquillian>2.0.0.Final</version.org.wildfly.arquillian>
-        <version.org.wildfly.naming-client>1.0.0.Beta4</version.org.wildfly.naming-client>
-        <version.org.wildfly.security.elytron-subsystem>1.0.0.Alpha15</version.org.wildfly.security.elytron-subsystem>
+        <version.org.wildfly.naming-client>1.0.0.Beta6</version.org.wildfly.naming-client>
+        <version.org.wildfly.security.elytron-subsystem>1.0.0.Alpha16</version.org.wildfly.security.elytron-subsystem>
         <version.org.yaml.snakeyaml>1.15.0.redhat-1</version.org.yaml.snakeyaml>
         <version.sun.jaxb>2.2.11.redhat-4</version.sun.jaxb>
         <version.sun.saaj-impl>1.3.16.SP1-redhat-6</version.sun.saaj-impl>
@@ -1202,6 +1202,12 @@
                 <groupId>org.wildfly</groupId>
                 <artifactId>wildfly-naming-client</artifactId>
                 <version>${version.org.wildfly.naming-client}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.jboss.remoting3</groupId>
+                        <artifactId>jboss-remoting</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <dependency>
@@ -4270,18 +4276,6 @@
                 <groupId>org.jboss</groupId>
                 <artifactId>jboss-iiop-client</artifactId>
                 <version>${version.org.jboss.iiop-client}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.jboss</groupId>
-                <artifactId>jboss-remote-naming</artifactId>
-                <version>${version.org.jboss.remote-naming}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.jboss.remoting3</groupId>
-                        <artifactId>jboss-remoting</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
 
             <dependency>
