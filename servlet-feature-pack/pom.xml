@@ -302,6 +302,28 @@
 
         <dependency>
             <groupId>org.jboss.eap</groupId>
+            <artifactId>wildfly-clustering-common</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.eap</groupId>
+            <artifactId>wildfly-clustering-service</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.eap</groupId>
             <artifactId>wildfly-ee</artifactId>
             <exclusions>
                 <exclusion>
