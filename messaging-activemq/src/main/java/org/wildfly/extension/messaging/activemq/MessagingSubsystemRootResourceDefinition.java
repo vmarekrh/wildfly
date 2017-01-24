@@ -42,6 +42,7 @@ import org.jboss.as.controller.transform.description.TransformationDescription;
 import org.jboss.as.controller.transform.description.TransformationDescriptionBuilder;
 import org.jboss.dmr.ModelNode;
 import org.wildfly.extension.messaging.activemq.jms.ConnectionFactoryAttributes;
+import org.wildfly.extension.messaging.activemq.jms.bridge.JMSBridgeDefinition;
 
 /**
  * {@link org.jboss.as.controller.ResourceDefinition} for the messaging subsystem root resource.
@@ -113,6 +114,9 @@ public class MessagingSubsystemRootResourceDefinition extends PersistentResource
         rejectDefinedAttribute(bridge, BridgeDefinition.CREDENTIAL_REFERENCE);
         // reject producer-window-size introduced in management version 2.0.0 if it is defined and different from the default value.
         rejectDefinedAttributeWithDefaultValue(bridge, BridgeDefinition.PRODUCER_WINDOW_SIZE);
+        ResourceTransformationDescriptionBuilder jmsBridge = server.addChildResource(MessagingExtension.JMS_BRIDGE_PATH);
+        rejectDefinedAttributeWithDefaultValue(jmsBridge, JMSBridgeDefinition.SOURCE_CREDENTIAL_REFERENCE);
+        rejectDefinedAttributeWithDefaultValue(jmsBridge, JMSBridgeDefinition.TARGET_CREDENTIAL_REFERENCE);
         ResourceTransformationDescriptionBuilder clusterConnection = server.addChildResource(MessagingExtension.CLUSTER_CONNECTION_PATH);
         // reject producer-window-size introduced in management version 2.0.0 if it is defined and different from the default value.
         rejectDefinedAttributeWithDefaultValue(clusterConnection, ClusterConnectionDefinition.PRODUCER_WINDOW_SIZE);

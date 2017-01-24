@@ -412,6 +412,7 @@ public class MessagingSubsystemParser_1_1 extends PersistentResourceXMLParser {
                                                         BridgeDefinition.PRODUCER_WINDOW_SIZE,
                                                         BridgeDefinition.USER,
                                                         BridgeDefinition.PASSWORD,
+                                                        BridgeDefinition.CREDENTIAL_REFERENCE,
                                                         BridgeDefinition.CONNECTOR_REFS,
                                                         BridgeDefinition.DISCOVERY_GROUP_NAME))
                                 .addChild(
