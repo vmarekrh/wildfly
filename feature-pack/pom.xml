@@ -2458,6 +2458,19 @@
             </exclusions>
         </dependency>
 
+       <dependency>
+            <groupId>org.wildfly.discovery</groupId>
+            <artifactId>wildfly-discovery-client</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+
+
         <dependency>
             <groupId>org.jboss.eap</groupId>
             <artifactId>wildfly-ejb3</artifactId>
@@ -2607,6 +2620,17 @@
         </dependency>
 
         <dependency>
+            <groupId>org.wildfly</groupId>
+            <artifactId>wildfly-naming-client</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
             <groupId>org.jboss.eap</groupId>
             <artifactId>wildfly-pojo</artifactId>
             <exclusions>
@@ -2631,6 +2655,17 @@
         <dependency>
             <groupId>org.jboss.eap</groupId>
             <artifactId>wildfly-transactions</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.wildfly.transaction</groupId>
+            <artifactId>wildfly-transaction-client</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>*</groupId>
