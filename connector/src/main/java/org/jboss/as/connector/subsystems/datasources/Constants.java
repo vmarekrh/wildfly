@@ -771,6 +771,7 @@ public class Constants {
                     .addAccessConstraint(SensitiveTargetAccessConstraintDefinition.CREDENTIAL)
                     .addAccessConstraint(DS_SECURITY_DEF)
                     .addAlternatives(RECOVERY_PASSWORD_NAME)
+                    .setRestartAllServices()
                     .build();
 
     static SimpleAttributeDefinition RECOVER_PLUGIN_CLASSNAME = new SimpleAttributeDefinitionBuilder(RECOVER_PLUGIN_CLASSNAME_NAME, ModelType.STRING, true)
