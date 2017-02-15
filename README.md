@@ -12,21 +12,25 @@ And of course Java EE!
 Building
 -------------------
 
-Ensure you have JDK 8 (or newer) installed
+Prerequisites:
 
-> java -version
+* JDK 8 or newer - check `java -version`
+* Maven 3.3.1 or newer - check `mvn -v`
+* On *nix systems, make sure that the maximum number of open files for the user running the build is at least 4096
+  (check `ulimit -n`) or more, depending on what other i/o intensive processes the user is running.
 
-On *nix-like system use the prepared script
+To build with your own Maven installation:
 
-> ./build.sh
+    mvn install
 
-On Windows use the corresponding batch script
+Alternatively, you can use the Maven Wrapper script that downloads and installs (if necessary) the required Maven version to
+`~/.m2/wrapper` and runs it from there. On Linux, run
 
-> build.bat
+    ./mvnw install
 
-If you already have Maven 3.2.5 (or newer) installed you can use it directly
+On Windows
 
-> mvn install
+    mvnw install
 
 
 Starting and Stopping JBoss EAP
@@ -86,13 +90,11 @@ The testsuite module contains several submodules including the following:
 * "integration" -- tests of a WildFly standalone server's internals. Should be run with no failures before any major commits.
 * "spec" -- tests of features that only involve end user use of the Java EE 7 spec APIs. Should be run with no failures before any major commits.
 
-To run the basic testsuite including smoke tests from the root directory, run the build script "./build.sh" or "build.bat":
-
-For basic smoke tests, simply: "./build.sh test"
+For basic smoke tests, simply: `mvn test`
 
 To run all the tests
 
-> $ ./build.sh install -DallTests
+    mvn install -DallTests
 
 Using Eclipse
 -------------
