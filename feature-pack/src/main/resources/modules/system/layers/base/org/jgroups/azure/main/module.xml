@@ -29,7 +29,7 @@
     </properties>
 
     <resources>
-        <artifact name="${org.jgroups:jgroups-azure}"/>
+        <artifact name="${org.jgroups.azure:jgroups-azure}"/>
     </resources>
 
     <dependencies>
