@@ -203,7 +203,6 @@ public class JaxrsIntegrationProcessor implements DeploymentUnitProcessor {
             servlet.setAsyncSupported(true);
             addServlet(webdata, servlet);
             setServletMappingPrefix(webdata, JAX_RS_SERVLET_NAME, servlet);
-            return;
         } else {
 
             for (Class<? extends Application> applicationClass : applicationClassSet) {
