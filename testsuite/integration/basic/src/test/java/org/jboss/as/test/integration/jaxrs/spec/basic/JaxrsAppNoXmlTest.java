@@ -40,12 +40,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 
-/**
- * @tpSubChapter Configuration
- * @tpChapter Integration tests
- * @tpTestCaseDetails Test for usage of more application in one deployment
- * @tpSince RESTEasy 3.0.16
- */
+
 @RunWith(Arquillian.class)
 @RunAsClient
 public class JaxrsAppNoXmlTest {
