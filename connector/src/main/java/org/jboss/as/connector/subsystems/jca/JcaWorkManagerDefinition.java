@@ -33,7 +33,6 @@ import java.util.Set;
 
 import org.jboss.as.connector.logging.ConnectorLogger;
 import org.jboss.as.connector.metadata.api.common.Security;
-import org.jboss.as.controller.AttributeDefinition;
 import org.jboss.as.controller.OperationContext;
 import org.jboss.as.controller.OperationFailedException;
 import org.jboss.as.controller.OperationStepHandler;
@@ -82,10 +81,8 @@ public class JcaWorkManagerDefinition extends SimpleResourceDefinition {
     public void registerAttributes(ManagementResourceRegistration resourceRegistration) {
         super.registerAttributes(resourceRegistration);
 
-        for (final WmParameters parameter : WmParameters.values()) {
-            AttributeDefinition ad = parameter.getAttribute();
-            resourceRegistration.registerReadOnlyAttribute(ad, ReadResourceNameOperationStepHandler.INSTANCE);
-        }
+        resourceRegistration.registerReadOnlyAttribute(WmParameters.NAME.getAttribute(), ReadResourceNameOperationStepHandler.INSTANCE);
+        resourceRegistration.registerReadOnlyAttribute(WmParameters.ELYTRON_ENABLED.getAttribute(), null);
 
     }
 
@@ -165,7 +162,7 @@ public class JcaWorkManagerDefinition extends SimpleResourceDefinition {
     public enum WmParameters {
         NAME(SimpleAttributeDefinitionBuilder.create("name", ModelType.STRING)
                 .setAllowExpression(false)
-                .setAllowNull(false)
+                .setRequired(true)
                 .setMeasurementUnit(MeasurementUnit.NONE)
                 .setRestartAllServices()
                 .setXmlName("name")
@@ -176,7 +173,7 @@ public class JcaWorkManagerDefinition extends SimpleResourceDefinition {
                 .setDefaultValue(new ModelNode(ELYTRON_MANAGED_SECURITY))
                 .build());
 
-        private WmParameters(SimpleAttributeDefinition attribute) {
+        WmParameters(SimpleAttributeDefinition attribute) {
             this.attribute = attribute;
         }
 
