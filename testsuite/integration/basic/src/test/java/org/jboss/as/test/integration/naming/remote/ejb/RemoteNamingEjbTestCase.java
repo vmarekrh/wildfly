@@ -29,11 +29,13 @@ import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.as.arquillian.container.ManagementClient;
 import org.jboss.as.controller.descriptions.ModelDescriptionConstants;
 import org.jboss.as.test.integration.common.DefaultConfiguration;
+import org.jboss.as.test.shared.util.AssumeTestGroupUtil;
 import org.jboss.dmr.ModelNode;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.wildfly.naming.java.permission.JndiPermission;
@@ -71,6 +73,11 @@ public class RemoteNamingEjbTestCase {
 
     @ArquillianResource
     private ManagementClient managementClient;
+
+    @BeforeClass
+    public static void beforeClass() {
+        AssumeTestGroupUtil.assumeElytronProfileTestsEnabled();
+    }
 
     @Deployment
     public static Archive<?> deploy() {
