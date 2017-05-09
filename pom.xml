@@ -104,7 +104,7 @@
         <version.groovy-all>2.4.7</version.groovy-all>
         <version.httpunit>1.7.2</version.httpunit>
         <version.io.netty>4.1.5.Final-redhat-2</version.io.netty>
-        <version.io.undertow.jastow>2.0.2.Final</version.io.undertow.jastow>
+        <version.io.undertow.jastow>2.0.2.Final-redhat-1</version.io.undertow.jastow>
         <version.io.undertow.js>1.0.2.Final-redhat-1</version.io.undertow.js>
         <version.javax.activation>1.1.1.redhat-5</version.javax.activation>
         <version.javax.enterprise>1.2.0.redhat-2</version.javax.enterprise>
@@ -117,9 +117,9 @@
         <version.jsoup>1.8.3.redhat-2</version.jsoup>
         <version.net.jcip>1.0.0.redhat-8</version.net.jcip>
         <version.net.shibboleth.utilities.java-support>7.1.1.redhat-1</version.net.shibboleth.utilities.java-support>
-        <version.org.apache.activemq.artemis>1.5.4.jbossorg-003</version.org.apache.activemq.artemis>
+        <version.org.apache.activemq.artemis>1.5.4.jbossorg-004</version.org.apache.activemq.artemis>
         <version.org.apache.avro>1.8.1.redhat-1</version.org.apache.avro>
-        <version.org.apache.cxf>3.1.11</version.org.apache.cxf>
+        <version.org.apache.cxf>3.1.11.redhat-1</version.org.apache.cxf>
         <version.org.apache.cxf.xjcplugins>3.0.5.redhat-1</version.org.apache.cxf.xjcplugins>
         <version.org.apache.ds>2.0.0-M20</version.org.apache.ds>
         <version.org.apache.httpcomponents.httpasyncclient>4.1.2.redhat-1</version.org.apache.httpcomponents.httpasyncclient>
@@ -132,7 +132,7 @@
         <version.org.apache.neethi>3.0.3.redhat-1</version.org.apache.neethi>
         <version.org.apache.santuario>2.0.8.redhat-1</version.org.apache.santuario>
         <version.org.apache.velocity>1.7.0.redhat-5</version.org.apache.velocity>
-        <version.org.apache.ws.security>2.1.9</version.org.apache.ws.security>
+        <version.org.apache.ws.security>2.1.9.redhat-1</version.org.apache.ws.security>
         <version.org.apache.ws.xmlschema>2.2.1.redhat-1</version.org.apache.ws.xmlschema>
         <version.org.apache.xalan>2.7.1.redhat-11</version.org.apache.xalan>
         <version.org.bouncycastle>1.56.0.redhat-2</version.org.bouncycastle>
@@ -217,7 +217,7 @@
         <version.org.wildfly.arquillian>2.1.0.Alpha1</version.org.wildfly.arquillian>
         <version.org.wildfly.build-tools>1.1.8.Final</version.org.wildfly.build-tools>
         <version.org.wildfly.checkstyle-config>1.0.5.Final</version.org.wildfly.checkstyle-config>
-        <version.org.wildfly.core>3.0.0.Beta18</version.org.wildfly.core>
+        <version.org.wildfly.core>3.0.0.Beta19</version.org.wildfly.core>
         <version.org.wildfly.client-config>1.0.0.Beta4</version.org.wildfly.client-config>
         <version.org.wildfly.discovery-client>1.0.0.Beta10</version.org.wildfly.discovery-client>
         <version.org.wildfly.plugin>1.2.0.Alpha4</version.org.wildfly.plugin>
