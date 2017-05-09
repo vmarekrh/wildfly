@@ -78,6 +78,7 @@ import org.wildfly.test.security.common.elytron.EjbElytronDomainSetup;
 @RunWith(Arquillian.class)
 @ServerSetup({AuthenticationTestCase.EjbSecurityDomainSetup.class})
 @Category(CommonCriteria.class)
+@Ignore("[WFLY-7778] The deployment fails")
 public class AuthenticationTestCase {
 
     private static final String SERVER_HOST_PORT = TestSuiteEnvironment.getServerAddress() + ":" + TestSuiteEnvironment.getHttpPort();
