@@ -328,10 +328,7 @@ public final class VaultSession {
     public void vaultConfigurationDisplay() {
         System.out.println(SecurityLogger.ROOT_LOGGER.vaultConfigurationTitle());
         System.out.println("********************************************");
-        System.out.println("...");
-        System.out.println("</extensions>");
-        System.out.print(vaultConfiguration());
-        System.out.println("<management> ...");
+        System.out.println(vaultConfiguration());
         System.out.println("********************************************");
     }
 
@@ -340,23 +337,6 @@ public final class VaultSession {
      * @return
      */
     public String vaultConfiguration() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<vault>").append("\n");
-        sb.append("  <vault-option name=\"KEYSTORE_URL\" value=\"" + keystoreURL + "\"/>").append("\n");
-        sb.append("  <vault-option name=\"KEYSTORE_PASSWORD\" value=\"" + keystoreMaskedPassword + "\"/>").append("\n");
-        sb.append("  <vault-option name=\"KEYSTORE_ALIAS\" value=\"" + vaultAlias + "\"/>").append("\n");
-        sb.append("  <vault-option name=\"SALT\" value=\"" + salt + "\"/>").append("\n");
-        sb.append("  <vault-option name=\"ITERATION_COUNT\" value=\"" + iterationCount + "\"/>").append("\n");
-        sb.append("  <vault-option name=\"ENC_FILE_DIR\" value=\"" + encryptionDirectory + "\"/>").append("\n");
-        sb.append("</vault>");
-        return sb.toString();
-    }
-
-    /**
-     * Returns vault configuration string in CLI output.
-     * @return
-     */
-    String vaultConfigurationCLI() {
         StringBuilder sb = new StringBuilder();
         sb.append("/core-service=vault:add(vault-options=[");
         sb.append("(\"KEYSTORE_URL\" => \"").append(keystoreURL).append("\")").append(",");

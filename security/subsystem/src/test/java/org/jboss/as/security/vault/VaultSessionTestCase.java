@@ -26,7 +26,7 @@ public class VaultSessionTestCase extends VaultTest {
     }
 
     @Test
-    public void testVaultConfigurationCLI() {
+    public void testVaultConfiguration() {
         final String expectedCommand = "/core-service=vault:add(vault-options=[(\"KEYSTORE_URL\" => \"" + KEYSTORE_URL_VALUE + "\")," +
                 "(\"KEYSTORE_PASSWORD\" => \"" + MASKED_MYPASSWORD_VALUE + "\"),(\"KEYSTORE_ALIAS\" => \"" + KEYSTORE_ALIAS_VALUE + "\")," +
                 "(\"SALT\" => \"" + SALT_VALUE + "\"),(\"ITERATION_COUNT\" => \"" + ITERATION_COUNT_VALUE + "\")," +
@@ -40,6 +40,6 @@ public class VaultSessionTestCase extends VaultTest {
             Assert.fail("Failed while initializing vault session with exception " + e.getMessage());
         }
 
-        Assert.assertEquals(expectedCommand, vaultSession.vaultConfigurationCLI());
+        Assert.assertEquals(expectedCommand, vaultSession.vaultConfiguration());
     }
 }
