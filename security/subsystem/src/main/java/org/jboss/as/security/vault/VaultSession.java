@@ -134,7 +134,7 @@ public final class VaultSession {
             throw new Exception("Encryption directory has to be specified.");
         }
         if (!encryptionDirectory.endsWith("/") || encryptionDirectory.endsWith("\\")) {
-            encryptionDirectory = encryptionDirectory + (System.getProperty("file.separator", "/"));
+            encryptionDirectory = encryptionDirectory + ("/");
         }
         File d = new File(encryptionDirectory);
         if (!d.exists()) {
@@ -349,6 +349,23 @@ public final class VaultSession {
         sb.append("  <vault-option name=\"ITERATION_COUNT\" value=\"" + iterationCount + "\"/>").append("\n");
         sb.append("  <vault-option name=\"ENC_FILE_DIR\" value=\"" + encryptionDirectory + "\"/>").append("\n");
         sb.append("</vault>");
+        return sb.toString();
+    }
+
+    /**
+     * Returns vault configuration string in CLI output.
+     * @return
+     */
+    String vaultConfigurationCLI() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("/core-service=vault:add(vault-options=[");
+        sb.append("(\"KEYSTORE_URL\" => \"").append(keystoreURL).append("\")").append(",");
+        sb.append("(\"KEYSTORE_PASSWORD\" => \"").append(keystoreMaskedPassword).append("\")").append(",");
+        sb.append("(\"KEYSTORE_ALIAS\" => \"").append(vaultAlias).append("\")").append(",");
+        sb.append("(\"SALT\" => \"").append(salt).append("\")").append(",");
+        sb.append("(\"ITERATION_COUNT\" => \"").append(iterationCount).append("\")").append(",");
+        sb.append("(\"ENC_FILE_DIR\" => \"").append(encryptionDirectory).append("\")");
+        sb.append("])");
         return sb.toString();
     }
 
