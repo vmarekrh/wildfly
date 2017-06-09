@@ -116,14 +116,14 @@
         <version.joda-time>2.9.7.redhat-1</version.joda-time>
         <version.jsoup>1.8.3.redhat-2</version.jsoup>
         <version.net.jcip>1.0.0.redhat-8</version.net.jcip>
-        <version.net.shibboleth.utilities.java-support>7.1.1.redhat-1</version.net.shibboleth.utilities.java-support>
+        <version.net.shibboleth.utilities.java-support>7.1.1.redhat-2</version.net.shibboleth.utilities.java-support>
         <version.org.apache.activemq.artemis>1.5.5.002-redhat-1</version.org.apache.activemq.artemis>
         <version.org.apache.avro>1.8.1.redhat-1</version.org.apache.avro>
         <version.org.apache.cxf>3.1.11.redhat-1</version.org.apache.cxf>
-        <version.org.apache.cxf.xjcplugins>3.0.5.redhat-1</version.org.apache.cxf.xjcplugins>
+        <version.org.apache.cxf.xjcplugins>3.0.5.redhat-2</version.org.apache.cxf.xjcplugins>
         <version.org.apache.ds>2.0.0-M20</version.org.apache.ds>
         <version.org.apache.httpcomponents.httpasyncclient>4.1.2.redhat-1</version.org.apache.httpcomponents.httpasyncclient>
-        <version.org.apache.james.apache-mime4j>0.6.0.redhat-5</version.org.apache.james.apache-mime4j>
+        <version.org.apache.james.apache-mime4j>0.6.0.redhat-6</version.org.apache.james.apache-mime4j>
         <version.org.apache.jstl>1.2.6.RC1-redhat-1</version.org.apache.jstl>
         <version.org.apache.lucene>5.3.1.redhat-1</version.org.apache.lucene>
         <version.org.apache.myfaces.core>2.2.11</version.org.apache.myfaces.core>
@@ -172,7 +172,7 @@
         <version.org.jboss.resteasy>3.0.23.Final-redhat-1</version.org.jboss.resteasy>
         <version.org.jboss.seam.int>7.0.0.GA-redhat-2</version.org.jboss.seam.int>
         <version.org.jboss.security.jboss-negotiation>3.0.4.Final-redhat-1</version.org.jboss.security.jboss-negotiation>
-        <version.org.jboss.security.jbossxacml>2.0.8.Final-redhat-7</version.org.jboss.security.jbossxacml>
+        <version.org.jboss.security.jbossxacml>2.0.8.Final-redhat-8</version.org.jboss.security.jbossxacml>
         <version.org.jboss.shrinkwrap.shrinkwrap>1.2.6</version.org.jboss.shrinkwrap.shrinkwrap>
         <!-- only needed here until wildfly-arquillian has this version properly synced with arquillian itslef  -->
         <version.org.jboss.shrinkwrap.descriptors>2.0.0-alpha-8</version.org.jboss.shrinkwrap.descriptors>
@@ -205,7 +205,7 @@
         <version.org.jboss.ws.common.tools>1.2.3.Final-redhat-1</version.org.jboss.ws.common.tools>
         <version.org.jboss.ws.cxf>5.1.8.Final-redhat-1</version.org.jboss.ws.cxf>
         <version.org.jboss.ws.jaxws-undertow-httpspi>1.0.1.Final-redhat-1</version.org.jboss.ws.jaxws-undertow-httpspi>
-        <version.org.jgroups>3.6.13.Final-redhat-1</version.org.jgroups>
+        <version.org.jgroups>3.6.13.Final-redhat-2</version.org.jgroups>
         <version.org.jgroups.azure>1.1.0.Final-redhat-1</version.org.jgroups.azure>
         <version.org.jipijapa>1.0.1.Final</version.org.jipijapa>
         <version.org.kohsuke.metainf-services>1.7</version.org.kohsuke.metainf-services>
