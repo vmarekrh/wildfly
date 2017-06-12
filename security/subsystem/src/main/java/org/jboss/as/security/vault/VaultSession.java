@@ -326,9 +326,14 @@ public final class VaultSession {
      * Display info about vault itself in form of AS7 configuration file.
      */
     public void vaultConfigurationDisplay() {
+        final String configuration = vaultConfiguration();
         System.out.println(SecurityLogger.ROOT_LOGGER.vaultConfigurationTitle());
         System.out.println("********************************************");
-        System.out.println(vaultConfiguration());
+        System.out.println("For standalone mode:");
+        System.out.println(configuration);
+        System.out.println("********************************************");
+        System.out.println("For domain mode:");
+        System.out.println("/host=the_host" + configuration);
         System.out.println("********************************************");
     }
 
