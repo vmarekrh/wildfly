@@ -2996,7 +2996,7 @@
                                         <resource>
                                             <directory>${project.basedir}/src/license</directory>
                                             <includes>
-                                                <include>licenses.xml</include>
+                                                <include>*licenses.xml</include>
                                             </includes>
                                             <filtering>false</filtering>
                                         </resource>
@@ -3019,7 +3019,7 @@
                                 <configuration>
                                     <sortByGroupIdAndArtifactId>true</sortByGroupIdAndArtifactId>
                                     <licensesOutputDirectory>${license.directory}</licensesOutputDirectory>
-                                    <licensesOutputFile>${license.directory}/licenses.xml</licensesOutputFile>
+                                    <licensesOutputFile>${license.directory}/full-feature-pack-licenses.xml</licensesOutputFile>
                                 </configuration>
                             </execution>
                         </executions>
@@ -3054,7 +3054,7 @@
                                         <transformationSet>
                                             <dir>${license.directory}</dir>
                                             <includes>
-                                                <include>licenses.xml</include>
+                                                <include>*licenses.xml</include>
                                             </includes>
                                             <stylesheet>src/main/resources/content/docs/licenses/licenses.xsl</stylesheet>
                                             <outputDir>${license.directory}</outputDir>
