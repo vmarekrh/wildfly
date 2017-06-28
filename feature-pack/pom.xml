@@ -109,6 +109,18 @@
             </exclusions>
         </dependency>
 
+        <dependency>
+            <groupId>org.jboss.migration</groupId>
+            <artifactId>jboss-server-migration-eap7.1-feature-pack</artifactId>
+            <type>zip</type>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <!-- module and copy artifact dependencies -->
 
         <dependency>
