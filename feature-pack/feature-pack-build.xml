@@ -23,6 +23,7 @@
 <build xmlns="urn:wildfly:feature-pack-build:1.1">
     <dependencies>
     	<artifact name="org.jboss.eap:wildfly-servlet-feature-pack" />
+    	<artifact name="org.jboss.migration:jboss-server-migration-eap7.1-feature-pack" />
     </dependencies>
     <config>
         <!-- Core configs -->
