@@ -45,6 +45,6 @@ public class NoTransportBuilder extends GlobalComponentBuilder<TransportConfigur
 
     @Override
     public ServiceBuilder<TransportConfiguration> build(ServiceTarget target) {
-        return super.build(target).setInitialMode(ServiceController.Mode.PASSIVE);
+        return super.build(target).setInitialMode(ServiceController.Mode.ON_DEMAND);
     }
 }
