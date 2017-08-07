@@ -3135,4 +3135,8 @@ public interface EjbLogger extends BasicLogger {
 
     @Message(id = 498, value = "Business view method %s declared final in %s")
     DeploymentUnitProcessingException businessViewMethodDeclaredFinal(String method, String bean);
+
+    @LogMessage(level = ERROR)
+    @Message(id = 500, value = "Legacy org.jboss.security.annotation.SecurityDomain annotation is used in class: %s, please use org.jboss.ejb3.annotation.SecurityDomain instead.")
+    void legacySecurityDomainAnnotationIsUsed(String cls);
 }
