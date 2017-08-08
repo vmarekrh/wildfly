@@ -28,7 +28,13 @@
                 <filter pattern="docs/contrib/*" include="false"/>
             </contents>
         </feature-pack>
-        <feature-pack groupId="org.jboss.migration" artifactId="jboss-server-migration-eap7.1-feature-pack" version="${version.org.jboss.migration}" />
+        <feature-pack groupId="org.jboss.migration" artifactId="jboss-server-migration-eap7.1-feature-pack" version="${version.org.jboss.migration}">
+            <contents>
+                <filter pattern="copyright.txt" include="false"/>
+                <filter pattern="README.txt" include="false"/>
+                <filter pattern="docs/contrib/*" include="false"/>
+            </contents>
+        </feature-pack>
     </feature-packs>
     <version-overrides>
         <!-- enforce all feature packs refer to the correct widlfly core feature pack version -->
