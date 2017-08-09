@@ -59,5 +59,9 @@ limitations under the License.
       <location>target/${server.output.dir.prefix}-${jboss.eap.release.version}/modules/system/layers/base/org/jboss/as/server/main/wildfly-server-${version.org.wildfly.core}.jar</location>
       <exists>true</exists>
     </file>
+    <file>
+      <location>target/${server.output.dir.prefix}-${jboss.eap.release.version}/docs/contrib/scripts</location>
+      <exists>false</exists>
+    </file>
   </files>
 </verifications>
