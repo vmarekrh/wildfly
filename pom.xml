@@ -129,7 +129,6 @@
         <version.org.apache.myfaces.core>2.2.11</version.org.apache.myfaces.core>
         <version.org.apache.openjpa>2.4.1</version.org.apache.openjpa>
         <version.org.eclipselink.version>2.6.3</version.org.eclipselink.version>
-<<<<<<< HEAD
         <version.org.apache.neethi>3.0.3.redhat-1</version.org.apache.neethi>
         <version.org.apache.santuario>2.0.8.redhat-1</version.org.apache.santuario>
         <version.org.apache.velocity>1.7.0.redhat-5</version.org.apache.velocity>
