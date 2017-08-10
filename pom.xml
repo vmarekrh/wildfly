@@ -129,6 +129,7 @@
         <version.org.apache.myfaces.core>2.2.11</version.org.apache.myfaces.core>
         <version.org.apache.openjpa>2.4.1</version.org.apache.openjpa>
         <version.org.eclipselink.version>2.6.3</version.org.eclipselink.version>
+<<<<<<< HEAD
         <version.org.apache.neethi>3.0.3.redhat-1</version.org.apache.neethi>
         <version.org.apache.santuario>2.0.8.redhat-1</version.org.apache.santuario>
         <version.org.apache.velocity>1.7.0.redhat-5</version.org.apache.velocity>
@@ -162,7 +163,7 @@
         <version.org.jboss.ejb3.ext-api>2.2.0.Final-redhat-1</version.org.jboss.ejb3.ext-api>
         <version.org.jboss.genericjms>2.0.0.Final-redhat-1</version.org.jboss.genericjms>
         <version.org.jboss.iiop-client>1.0.1.Final-redhat-1</version.org.jboss.iiop-client>
-        <version.org.jboss.ironjacamar>1.4.5.Final-redhat-1</version.org.jboss.ironjacamar>
+        <version.org.jboss.ironjacamar>1.4.6.Final</version.org.jboss.ironjacamar>
         <version.org.jboss.jboss-transaction-spi>7.6.0.Final-redhat-1</version.org.jboss.jboss-transaction-spi>
         <version.org.jboss.metadata>10.0.2.Final-redhat-1</version.org.jboss.metadata>
         <version.org.jboss.migration>1.0.0.Final-redhat-1</version.org.jboss.migration>
