@@ -29,10 +29,25 @@
             </contents>
         </feature-pack>
         <feature-pack groupId="org.jboss.migration" artifactId="jboss-server-migration-eap7.1-feature-pack" version="${version.org.jboss.migration}">
-            <contents>
+			<modules>
+                <filter pattern="system/layers/base/org/jboss/migration/cli/main/module.xml" include="true" transitive="false"/>
+                <filter pattern="system/layers/base/org/apache/commons/cli/main/module.xml" include="false"/>
+            </modules>
+            <contents>            
                 <filter pattern="copyright.txt" include="false"/>
-                <filter pattern="README.txt" include="false"/>
+                <filter pattern="README.txt" include="false"/>               
+                <filter pattern="bin/add-user*" include="false"/>
+                <filter pattern="bin/*cli*" include="false"/>
+                <filter pattern="bin/common*" include="false"/>
+                <filter pattern="bin/domain*" include="false"/>
+                <filter pattern="bin/*elytron*" include="false"/>
+                <filter pattern="bin/standalone*" include="false"/>
+                <filter pattern="bin/vault*" include="false"/>
                 <filter pattern="docs/contrib/*" include="false"/>
+                <filter pattern="docs/licenses/licenses.*" include="false"/>
+                <filter pattern="docs/licenses/core-feature-pack-licenses.*" include="false"/>
+                <filter pattern="domain/*" include="false"/>
+                <filter pattern="standalone/*" include="false"/>
             </contents>
         </feature-pack>
     </feature-packs>
