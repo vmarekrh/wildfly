@@ -40,10 +40,11 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 
-
+/**
+ */
 @RunWith(Arquillian.class)
 @RunAsClient
-public class JaxrsAppNoXmlTest {
+public class JaxrsAppNoXmlTestCase {
     @ArquillianResource
     URL baseUrl;
 
@@ -51,7 +52,7 @@ public class JaxrsAppNoXmlTest {
 
     @Deployment
     public static Archive<?> deploySimpleResource() {
-        WebArchive war = ShrinkWrap.create(WebArchive.class, JaxrsAppNoXmlTest.class.getSimpleName() + ".war");
+        WebArchive war = ShrinkWrap.create(WebArchive.class, JaxrsAppNoXmlTestCase.class.getSimpleName() + ".war");
         war.addClasses(JaxrsAppResource.class, JaxrsApp.class, JaxrsAppThree.class);
         return war;
     }

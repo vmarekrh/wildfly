@@ -37,8 +37,10 @@ import org.jboss.security.plugins.ClassLoaderLocator;
 import org.wildfly.security.manager.WildFlySecurityManager;
 
 /**
- * An implementation of {@code ClassLoaderLocator} that is based on JBoss Modules
+ * An implementation of {@code ClassLoaderLocator} that is based on JBoss Modules.
+ *
  * @author anil saldhana
+ * @author <a href="sguilhen@jboss.com">Stefan Guilhen</a>
  */
 public class ModuleClassLoaderLocator implements ClassLoaderLocator {
     private final ModuleLoader moduleLoader;

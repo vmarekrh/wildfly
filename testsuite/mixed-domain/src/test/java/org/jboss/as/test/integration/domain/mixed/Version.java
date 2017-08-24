@@ -72,6 +72,7 @@ public @interface Version {
         public String getFullVersionName() {
             return basename + version;
         }
+
         public String getZipFileName() {
             return  getFullVersionName() + ".zip";
         }

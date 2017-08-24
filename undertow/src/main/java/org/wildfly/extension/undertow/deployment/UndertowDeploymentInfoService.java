@@ -1002,10 +1002,12 @@ public class UndertowDeploymentInfoService implements Service<DeploymentInfo> {
                 webSocketDeploymentInfo.setBuffers(servletContainer.getWebsocketsBufferPool().getValue());
                 webSocketDeploymentInfo.setWorker(servletContainer.getWebsocketsWorker().getValue());
                 webSocketDeploymentInfo.setDispatchToWorkerThread(servletContainer.isDispatchWebsocketInvocationToWorker());
+
                 if(servletContainer.isPerMessageDeflate()) {
                     PerMessageDeflateHandshake perMessageDeflate = new PerMessageDeflateHandshake(false, servletContainer.getDeflaterLevel());
                     webSocketDeploymentInfo.addExtension(perMessageDeflate);
                 }
+
                 final AtomicReference<ServerActivity> serverActivity = new AtomicReference<>();
                 webSocketDeploymentInfo.addListener(wsc -> {
                     serverActivity.set(new ServerActivity() {
