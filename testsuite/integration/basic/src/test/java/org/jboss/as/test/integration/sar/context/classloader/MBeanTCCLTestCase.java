@@ -119,5 +119,4 @@ public class MBeanTCCLTestCase {
         connector = JMXConnectorFactory.connect(managementClient.getRemoteJMXURL(), DefaultConfiguration.credentials());
         return connector.getMBeanServerConnection();
     }
-
 }

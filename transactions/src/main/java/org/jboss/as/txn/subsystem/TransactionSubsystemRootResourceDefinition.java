@@ -281,7 +281,7 @@ public class TransactionSubsystemRootResourceDefinition extends SimpleResourceDe
 
         attributesWithoutMutuals.remove(STATISTICS_ENABLED);
         attributesWithoutMutuals.remove(DEFAULT_TIMEOUT);
-        attributesWithoutMutuals.remove(JDBC_STORE_DATASOURCE); // Remove these as they also need special write handler
+        attributesWithoutMutuals.remove(JDBC_STORE_DATASOURCE); // Remove these as it also needs special write handler
 
         attributesWithoutMutuals.remove(PROCESS_ID_UUID);
         attributesWithoutMutuals.remove(PROCESS_ID_SOCKET_BINDING);

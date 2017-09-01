@@ -35,7 +35,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Mock test for {@link org.jboss.as.security.service.SimpleSecurityManager}.
+ * Mock test for {@link SimpleSecurityManager}.
  *
  * Tests fix of JBEAP-11462 - run-as identity gets lost in some cases.
  *

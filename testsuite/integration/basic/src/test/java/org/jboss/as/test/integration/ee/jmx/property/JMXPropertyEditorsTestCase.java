@@ -122,7 +122,6 @@ public class JMXPropertyEditorsTestCase {
         final String address = managementClient.getMgmtAddress()+":"+managementClient.getMgmtPort();
         connector = JMXConnectorFactory.connect(new JMXServiceURL("service:jmx:http-remoting-jmx://"+address), DefaultConfiguration.credentials());
         return connector.getMBeanServerConnection();
-
     }
 
     private static Asset createServiceAsset(String attributeName, String attributeValue) {

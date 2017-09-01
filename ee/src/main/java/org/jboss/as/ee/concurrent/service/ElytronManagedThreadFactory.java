@@ -28,6 +28,7 @@ import org.glassfish.enterprise.concurrent.ManagedThreadFactoryImpl;
 import org.glassfish.enterprise.concurrent.spi.ContextHandle;
 import org.wildfly.security.auth.server.SecurityDomain;
 import org.wildfly.security.auth.server.SecurityIdentity;
+import org.wildfly.security.manager.WildFlySecurityManager;
 
 import javax.enterprise.concurrent.ManagedThreadFactory;
 import java.security.AccessController;
@@ -45,15 +46,18 @@ public class ElytronManagedThreadFactory extends ManagedThreadFactoryImpl {
     }
 
     protected AbstractManagedThread createThread(final Runnable r, final ContextHandle contextHandleForSetup) {
-        SecurityDomain domain = SecurityDomain.getCurrent();
+        boolean checking = WildFlySecurityManager.isChecking();
+        SecurityDomain domain = checking ?
+                AccessController.doPrivileged((PrivilegedAction<SecurityDomain>) SecurityDomain::getCurrent) :
+                SecurityDomain.getCurrent();
         SecurityIdentity identity = domain == null ? null : domain.getCurrentSecurityIdentity();
 
-        if (System.getSecurityManager() == null) {
-            return new ElytronManagedThread(r, contextHandleForSetup, identity);
-        } else {
+        if (checking) {
             return AccessController.doPrivileged((PrivilegedAction<ElytronManagedThread>)
                     () -> new ElytronManagedThread(r, contextHandleForSetup, identity)
             );
+        } else {
+            return new ElytronManagedThread(r, contextHandleForSetup, identity);
         }
     }
 
