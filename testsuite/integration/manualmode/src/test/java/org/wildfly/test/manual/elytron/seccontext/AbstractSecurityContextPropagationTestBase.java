@@ -25,6 +25,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.wildfly.test.manual.elytron.seccontext.SeccontextUtil.SERVER1;
 import static org.wildfly.test.manual.elytron.seccontext.SeccontextUtil.SERVER2;
@@ -39,6 +40,8 @@ import java.io.StringWriter;
 import java.net.SocketPermission;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.Base64.Encoder;
 import java.util.List;
@@ -57,6 +60,7 @@ import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.as.cli.CommandContext;
 import org.jboss.as.cli.CommandLineException;
 import org.jboss.as.controller.client.ModelControllerClient;
+import org.jboss.as.controller.descriptions.ModelDescriptionConstants;
 import org.jboss.as.controller.operations.common.Util;
 import org.jboss.as.network.NetworkUtils;
 import org.jboss.as.test.integration.domain.management.util.DomainTestUtils;
@@ -130,7 +134,7 @@ public abstract class AbstractSecurityContextPropagationTestBase {
                 .addAsManifestResource(createPermissionsXmlAsset(new ElytronPermission("authenticate"),
                         new ElytronPermission("getPrivateCredentials"),
                         new ElytronPermission("getSecurityDomain"),
-                        new SocketPermission(TestSuiteEnvironment.getServerAddressNode1()+":8180", "connect,resolve")
+                        new SocketPermission(TestSuiteEnvironment.getServerAddressNode1() + ":8180", "connect,resolve")
                         ),
                         "permissions.xml")
                 .addAsManifestResource(Utils.getJBossEjb3XmlAsset("seccontext-entry"), "jboss-ejb3.xml");
@@ -450,9 +454,12 @@ public abstract class AbstractSecurityContextPropagationTestBase {
                 readSnapshot();
 
                 if (snapshot == null) {
+                    // configure each server just once
+                    createPropertyFile();
                     final File cliFIle = File.createTempFile("seccontext-", ".cli");
                     try (FileOutputStream fos = new FileOutputStream(cliFIle)) {
-                        IOUtils.copy(AbstractSecurityContextPropagationTestBase.class.getResourceAsStream("seccontext-setup.cli"),
+                        IOUtils.copy(
+                                AbstractSecurityContextPropagationTestBase.class.getResourceAsStream("seccontext-setup.cli"),
                                 fos);
                     }
                     runBatch(cliFIle);
@@ -558,6 +565,19 @@ public abstract class AbstractSecurityContextPropagationTestBase {
                 e.printStackTrace();
                 throw e;
             }
+        }
+
+        /**
+         * Create single property file with users and/or roles in standalone server config directory. It will be used for
+         * property-realm configuration (see {@code seccontext-setup.cli} script)
+         */
+        private void createPropertyFile() throws IOException {
+            sendLine("/core-service=platform-mbean/type=runtime:read-attribute(name=system-properties)", false);
+            assertTrue(consoleOut.size() > 0);
+            ModelNode node = ModelNode.fromStream(new ByteArrayInputStream(consoleOut.toByteArray()));
+            String configDirPath = node.get(ModelDescriptionConstants.RESULT).get("jboss.server.config.dir").asString();
+            Files.write(Paths.get(configDirPath, "seccontext.properties"),
+                    Utils.createUsersFromRoles("admin", "servlet", "entry", "whoami").getBytes(StandardCharsets.ISO_8859_1));
         }
     }
 }
