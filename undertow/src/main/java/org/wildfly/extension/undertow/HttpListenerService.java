@@ -53,6 +53,7 @@ import org.xnio.channels.AcceptingChannel;
  * @author Tomaz Cerar
  */
 public class HttpListenerService extends ListenerService {
+
     private volatile AcceptingChannel<StreamConnection> server;
 
     private final ChannelUpgradeHandler httpUpgradeHandler = new ChannelUpgradeHandler();
