@@ -42,6 +42,7 @@ import io.undertow.util.AttachmentKey;
 import io.undertow.util.HeaderMap;
 import io.undertow.util.Headers;
 import io.undertow.util.HexConverter;
+import io.undertow.util.StatusCodes;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -228,7 +229,31 @@ public class DigestAuthenticationMechanism implements AuthenticationMechanism {
             return AuthenticationMechanismOutcome.NOT_AUTHENTICATED;
         }
 
-        // TODO - Validate the URI
+        if(parsedHeader.containsKey(DigestAuthorizationToken.DIGEST_URI)) {
+            String uri = parsedHeader.get(DigestAuthorizationToken.DIGEST_URI);
+            String requestURI = exchange.getRequestURI();
+            if(!exchange.getQueryString().isEmpty()) {
+                requestURI = requestURI + "?" + exchange.getQueryString();
+            }
+            if(!uri.equals(requestURI)) {
+                //it is possible we were given an absolute URI
+                //we reconstruct the URI from the host header to make sure they match up
+                //I am not sure if this is overly strict, however I think it is better
+                //to be safe than sorry
+                requestURI = exchange.getRequestURL();
+                if(!exchange.getQueryString().isEmpty()) {
+                    requestURI = requestURI + "?" + exchange.getQueryString();
+                }
+                if(!uri.equals(requestURI)) {
+                    //just end the auth process
+                    exchange.setStatusCode(StatusCodes.BAD_REQUEST);
+                    exchange.endExchange();
+                    return AuthenticationMechanismOutcome.NOT_AUTHENTICATED;
+                }
+            }
+        } else {
+            return AuthenticationMechanismOutcome.NOT_AUTHENTICATED;
+        }
 
         if (parsedHeader.containsKey(DigestAuthorizationToken.OPAQUE)) {
             if (!OPAQUE_VALUE.equals(parsedHeader.get(DigestAuthorizationToken.OPAQUE))) {
