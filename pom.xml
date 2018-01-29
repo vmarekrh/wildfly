@@ -119,7 +119,7 @@
         <version.net.shibboleth.utilities.java-support>7.1.1.redhat-2</version.net.shibboleth.utilities.java-support>
         <version.org.apache.activemq.artemis>1.5.5.009-redhat-1</version.org.apache.activemq.artemis>
         <version.org.apache.avro>1.7.6.redhat-1</version.org.apache.avro>
-        <version.org.apache.cxf>3.1.12.redhat-1</version.org.apache.cxf>
+        <version.org.apache.cxf>3.1.13.redhat-1</version.org.apache.cxf>
         <version.org.apache.cxf.xjcplugins>3.0.5.redhat-2</version.org.apache.cxf.xjcplugins>
         <version.org.apache.ds>2.0.0-M20</version.org.apache.ds>
         <version.org.apache.httpcomponents.httpasyncclient>4.1.2.redhat-1</version.org.apache.httpcomponents.httpasyncclient>
@@ -130,9 +130,9 @@
         <version.org.apache.openjpa>2.4.1</version.org.apache.openjpa>
         <version.org.eclipselink.version>2.6.3</version.org.eclipselink.version>
         <version.org.apache.neethi>3.0.3.redhat-1</version.org.apache.neethi>
-        <version.org.apache.santuario>2.0.8.redhat-1</version.org.apache.santuario>
+        <version.org.apache.santuario>2.0.9.redhat-1</version.org.apache.santuario>
         <version.org.apache.velocity>1.7.0.redhat-5</version.org.apache.velocity>
-        <version.org.apache.ws.security>2.1.10.redhat-1</version.org.apache.ws.security>
+        <version.org.apache.ws.security>2.1.11.redhat-1</version.org.apache.ws.security>
         <version.org.apache.ws.xmlschema>2.2.1.redhat-1</version.org.apache.ws.xmlschema>
         <version.org.apache.xalan>2.7.1.redhat-11</version.org.apache.xalan>
         <version.org.bouncycastle>1.56.0.redhat-2</version.org.bouncycastle>
@@ -204,7 +204,7 @@
         <version.org.jboss.ws.spi>3.1.4.Final-redhat-1</version.org.jboss.ws.spi>
         <version.org.jboss.ws.common>3.1.5.Final-redhat-1</version.org.jboss.ws.common>
         <version.org.jboss.ws.common.tools>1.2.4.Final-redhat-1</version.org.jboss.ws.common.tools>
-        <version.org.jboss.ws.cxf>5.1.9.Final-redhat-1</version.org.jboss.ws.cxf>
+        <version.org.jboss.ws.cxf>5.1.10.Final-redhat-1</version.org.jboss.ws.cxf>
         <version.org.jboss.ws.jaxws-undertow-httpspi>1.0.1.Final-redhat-1</version.org.jboss.ws.jaxws-undertow-httpspi>
         <version.org.jgroups>3.6.13.Final-redhat-2</version.org.jgroups>
         <version.org.jgroups.azure>1.1.0.Final-redhat-1</version.org.jgroups.azure>
