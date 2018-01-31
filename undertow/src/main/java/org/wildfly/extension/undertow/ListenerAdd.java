@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import io.undertow.UndertowOptions;
 import io.undertow.server.handlers.DisallowedMethodsHandler;
 import io.undertow.server.handlers.PeerNameResolvingHandler;
 import io.undertow.servlet.handlers.MarkSecureHandler;
@@ -80,8 +81,16 @@ abstract class ListenerAdd extends AbstractAddStepHandler {
         final boolean peerHostLookup = ListenerResourceDefinition.RESOLVE_PEER_ADDRESS.resolveModelAttribute(context, model).asBoolean();
         final boolean secure = ListenerResourceDefinition.SECURE.resolveModelAttribute(context, model).asBoolean();
 
+
         OptionMap listenerOptions = OptionList.resolveOptions(context, model, ListenerResourceDefinition.LISTENER_OPTIONS);
         OptionMap socketOptions = OptionList.resolveOptions(context, model, ListenerResourceDefinition.SOCKET_OPTIONS);
+
+
+        final boolean allowUnescaped = Boolean.getBoolean("org.wildfly.undertow.ALLOW_UNESCAPED_CHARACTERS_IN_URL");
+        if(allowUnescaped) {
+            listenerOptions = OptionMap.builder().addAll(listenerOptions).set(UndertowOptions.ALLOW_UNESCAPED_CHARACTERS_IN_URL, true).getMap();
+        }
+
         String serverName = parent.getLastElement().getValue();
         final ListenerService service = createService(name, serverName, context, model, listenerOptions,socketOptions);
         if (peerHostLookup) {
