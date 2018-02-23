@@ -132,8 +132,9 @@ public class EJBClientDescriptorMetaDataProcessor implements DeploymentUnitProce
             serviceBuilder.addDependency(EJBClientContextService.APP_CLIENT_URI_SERVICE_NAME, URI.class, service.getAppClientUri());
             serviceBuilder.addDependency(EJBClientContextService.APP_CLIENT_EJB_PROPERTIES_SERVICE_NAME, String.class, service.getAppClientEjbProperties());
         }
-
+        //default transport providers: remote from config, local from service.
         serviceBuilder.addDependency(EJBClientConfiguratorService.SERVICE_NAME, EJBClientConfiguratorService.class, service.getConfiguratorServiceInjector());
+        serviceBuilder.addDependency(LocalTransportProvider.DEFAULT_LOCAL_TRANSPORT_PROVIDER_SERVICE_NAME, EJBTransportProvider.class, service.getLocalProviderInjector());
 
         if (ejbClientDescriptorMetaData != null) {
             // profile and remoting-ejb-receivers cannot be used together
