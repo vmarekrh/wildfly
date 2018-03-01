@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module xmlns="urn:jboss:module:1.7" name="test.weld-module-A">
+<module xmlns="urn:jboss:module:1.1" name="test.weld-module-A">
 
     <resources>
         <resource-root path="test-module-a.jar"/>
