@@ -280,6 +280,7 @@ public class ClientCompatibilityUnitTestCase {
         classLoaderBuilder.addParentFirstClassPattern("org.jboss.as.controller.client.OperationMessageHandler");
         classLoaderBuilder.addParentFirstClassPattern("org.jboss.as.controller.client.Operation");
         classLoaderBuilder.addParentFirstClassPattern("org.jboss.as.controller.client.OperationResponse*");
+        classLoaderBuilder.addParentFirstClassPattern("org.jboss.as.protocol.logging.ProtocolLogger");
 
         final ClassLoader classLoader = classLoaderBuilder.build();
         final Class<?> factoryClass = classLoader.loadClass("org.jboss.as.controller.client.ModelControllerClient$Factory");
