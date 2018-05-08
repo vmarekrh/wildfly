@@ -277,6 +277,7 @@
         <module>client/jms</module>
         <module>client/shade</module>
         <module>clustering</module>
+        <module>component-matrix-builder</module>
         <module>connector</module>
         <module>dist</module>
         <module>ee</module>
@@ -418,7 +419,6 @@
                           </systemProperties>
                           <argLine>${surefire.system.args}</argLine>
                     </configuration>
-
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
