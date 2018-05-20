@@ -82,7 +82,6 @@
 
         <version.antlr>2.7.7.redhat-7</version.antlr>
         <version.asm>3.3.1.redhat-13</version.asm>
-        <version.ch.qos.cal10n>0.8.1.redhat-1</version.ch.qos.cal10n>
         <version.com.fasterxml.classmate>1.3.3.redhat-1</version.com.fasterxml.classmate>
         <version.com.fasterxml.jackson>2.8.11.redhat-1</version.com.fasterxml.jackson>
         <version.com.fasterxml.jackson.databind>2.8.11.1-redhat-1</version.com.fasterxml.jackson.databind>
@@ -214,7 +213,6 @@
         <version.org.opensaml.opensaml>3.1.1.redhat-1</version.org.opensaml.opensaml>
         <version.org.picketbox.picketbox-commons>1.0.0.final-redhat-5</version.org.picketbox.picketbox-commons>
         <version.org.picketlink>2.5.5.SP11-redhat-1</version.org.picketlink>
-        <version.org.slf4j>1.7.22.redhat-2</version.org.slf4j>
         <version.org.syslog4j>0.9.30</version.org.syslog4j>
         <version.org.wildfly.arquillian>2.1.0.Final</version.org.wildfly.arquillian>
         <version.org.wildfly.build-tools>1.2.2.Final</version.org.wildfly.build-tools>
@@ -1418,12 +1416,6 @@
                 <groupId>asm</groupId>
                 <artifactId>asm</artifactId>
                 <version>${version.asm}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>ch.qos.cal10n</groupId>
-                <artifactId>cal10n-api</artifactId>
-                <version>${version.ch.qos.cal10n}</version>
             </dependency>
 
             <dependency>
@@ -6122,31 +6114,6 @@
                 <groupId>org.picketlink.distribution</groupId>
                 <artifactId>picketlink-wildfly8</artifactId>
                 <version>${version.org.picketlink}</version>
-            </dependency>
-
-            <!-- This dependency is no longer used as a module. However it is required for client the JMS client library -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>jcl-over-slf4j</artifactId>
-                <version>${version.org.slf4j}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${version.org.slf4j}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-ext</artifactId>
-                <version>${version.org.slf4j}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-simple</artifactId>
-                <version>${version.org.slf4j}</version>
             </dependency>
 
             <dependency>
