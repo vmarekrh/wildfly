@@ -6,7 +6,7 @@
    <parent>
       <groupId>org.jboss.eap</groupId>
       <artifactId>wildfly-weld-parent</artifactId>
-      <version>7.1.3.GA-redhat-SNAPSHOT</version>
+      <version>7.1.4.GA-redhat-SNAPSHOT</version>
    </parent>
 
    <artifactId>wildfly-weld-webservices</artifactId>
