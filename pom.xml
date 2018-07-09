@@ -217,6 +217,7 @@
         <version.org.wildfly.arquillian>2.1.0.Final</version.org.wildfly.arquillian>
         <version.org.wildfly.build-tools>1.2.2.Final</version.org.wildfly.build-tools>
         <version.org.wildfly.checkstyle-config>1.0.5.Final</version.org.wildfly.checkstyle-config>
+        <version.org.wildfly.component-matrix-plugin>1.0.2.Final</version.org.wildfly.component-matrix-plugin>
         <version.org.wildfly.core>3.0.16.Final-redhat-1</version.org.wildfly.core>
         <version.org.wildfly.plugin>1.2.0.Final</version.org.wildfly.plugin>
         <version.org.wildfly.http-client>1.0.9.Final-redhat-1</version.org.wildfly.http-client>
@@ -277,6 +278,7 @@
         <module>client/jms</module>
         <module>client/shade</module>
         <module>clustering</module>
+        <module>component-matrix-builder</module>
         <module>connector</module>
         <module>dist</module>
         <module>ee</module>
@@ -418,7 +420,6 @@
                           </systemProperties>
                           <argLine>${surefire.system.args}</argLine>
                     </configuration>
-
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -862,6 +863,11 @@
                     <groupId>org.wildfly.maven.plugins</groupId>
                     <artifactId>licenses-plugin</artifactId>
                     <version>${version.org.wildfly.maven.plugins}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.wildfly.plugins</groupId>
+                    <artifactId>wildfly-component-matrix-plugin</artifactId>
+                    <version>${version.org.wildfly.component-matrix-plugin}</version>
                 </plugin>
            </plugins>
         </pluginManagement>
