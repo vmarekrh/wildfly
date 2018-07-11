@@ -33,6 +33,7 @@ import java.util.Base64;
 import java.util.Collections;
 import java.util.OptionalLong;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.StampedLock;
 
 import org.wildfly.clustering.ee.Batch;
@@ -96,11 +97,22 @@ public class DistributableSessionManager implements UndertowSessionManager {
     }
 
     private Runnable getSessionCloseTask() {
-        long stamp = this.lifecycleLock.tryReadLock();
-        if (stamp == 0) {
+        StampedLock lock = this.lifecycleLock;
+        long stamp = lock.tryReadLock();
+        if (stamp == 0L) {
             throw UndertowClusteringLogger.ROOT_LOGGER.sessionManagerStopped();
         }
-        return () -> this.lifecycleLock.unlock(stamp);
+        AtomicLong stampRef = new AtomicLong(stamp);
+        return new Runnable() {
+            @Override
+            public void run() {
+                // Ensure we only unlock once.
+                long stamp = stampRef.getAndSet(0L);
+                if (stamp != 0L) {
+                    lock.unlock(stamp);
+                }
+            }
+        };
     }
 
     @Override
