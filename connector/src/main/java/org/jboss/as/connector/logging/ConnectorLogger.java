@@ -906,4 +906,9 @@ public interface ConnectorLogger extends BasicLogger {
     @Message(id = 112, value = "Datasource %s is disabled")
     IllegalArgumentException datasourceIsDisabled(String jndiName);
 
+    @Message(id = 115, value = "Module for driver [%s] or one of it dependencies is missing: [%s]")
+    String missingDependencyInModuleDriver(String moduleName, String missingModule);
+
+    @Message(id = 116, value = "Failed to load module for RA [%s] - the module or one of its dependencies is missing [%s]")
+    String raModuleNotFound(String moduleName, String missingModule);
 }
