@@ -22,11 +22,14 @@
 package org.wildfly.test.integration.security.picketlink.federation;
 
 import com.meterware.httpunit.GetMethodWebRequest;
+import com.meterware.httpunit.PostMethodWebRequest;
+import com.meterware.httpunit.PutMethodWebRequest;
 import com.meterware.httpunit.WebConversation;
 import com.meterware.httpunit.WebForm;
 import com.meterware.httpunit.WebRequest;
 import com.meterware.httpunit.WebResponse;
 import org.apache.commons.io.FileUtils;
+import org.codehaus.plexus.util.StringInputStream;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -93,8 +96,11 @@ public class JBEAP10449TestCase {
         WebArchive serviceProvider = serviceProvider("sp-post.war");
 
         serviceProvider.addAsWebResource(JBEAP10449TestCase.class.getResource("JBEAP10449/sp/post-test-main.jsp"), "freezone/post-test-main.jsp");
+        serviceProvider.addAsWebResource(JBEAP10449TestCase.class.getResource("JBEAP10449/sp/mf-post-test.jsp"), "freezone/mf-post-test.jsp");
         serviceProvider.addAsWebResource(JBEAP10449TestCase.class.getResource("JBEAP10449/sp/index.jsp"), "index.jsp");
         serviceProvider.addAsWebInfResource(JBEAP10449TestCase.class.getResource("JBEAP10449/sp/web.xml"), "web.xml");
+        serviceProvider.addClass(JsonServlet.class);
+        serviceProvider.addClass(FileServlet.class);
 
         serviceProvider.addAsWebInfResource(new StringAsset("<jboss-web>" + //
                 "<security-domain>JBEAP-10449-sp</security-domain>" +
@@ -130,7 +136,108 @@ public class JBEAP10449TestCase {
 
         //it redirects to page, which should contain text sent in first form
         response = conversation.getCurrentPage();
-        assertTrue("There should be a text '"+TEXT+"' from first form in response. " + response.getText(), response.getText().contains(TEXT));
+        assertTrue("There should be a text 'Test Data: "+TEXT+"' from first form in response. " + response.getText(), response.getText().contains("Test Data: " + TEXT));
+        assertTrue("There should be a text 'Test Data Values: 1' from first form in response. " + response.getText(), response.getText().contains("Test Data Values: 1"));
+        // the paramater map should contain 'submit' and 'test-data'
+        assertTrue("There should be a text 'Parameters Map Size: 2' from first form in response. " + response.getText(), response.getText().contains("Parameters Map Size: 2"));
+        assertTrue("There should be a text 'Parameters Names Size: 2' from first form in response. " + response.getText(), response.getText().contains("Parameters Names Size: 2"));
+
+
+        // repeating the test to make sure we're able to read data without SAML roundtrip
+        request = new GetMethodWebRequest(url.toString()+"/freezone/post-test-main.jsp");
+        response = conversation.getResponse(request);
+        webForm = response.getForms()[0];
+        webForm.setParameter("test-data", TEXT + "2");
+        webForm.getSubmitButtons()[0].click();
+        response = conversation.getCurrentPage();
+        assertTrue("There should be a text 'Test Data: "+TEXT+"2' from first form in response. " + response.getText(), response.getText().contains("Test Data: " + TEXT+"2"));
+        assertTrue("There should be a text 'Test Data Values: 1' from first form in response. " + response.getText(), response.getText().contains("Test Data Values: 1"));
+        // the paramater map should contain 'submit' and 'test-data'
+        assertTrue("There should be a text 'Parameters Map Size: 2' from first form in response. " + response.getText(), response.getText().contains("Parameters Map Size: 2"));
+        assertTrue("There should be a text 'Parameters Names Size: 2' from first form in response. " + response.getText(), response.getText().contains("Parameters Names Size: 2"));
+    }
+
+    @Test
+    @OperateOnDeployment("service-provider")
+    public void testJSONPost(@ArquillianResource URL url) throws Exception {
+
+        //send text as a value in post form
+        WebRequest request = new PostMethodWebRequest(url.toString()+"/json-test", new StringInputStream("{\"val\":\"test\"}"), "application/json");
+        WebConversation conversation = new WebConversation();
+        WebResponse response = conversation.getResponse(request);
+
+        //it redirects to idp -> fill username and password
+        WebForm webForm = response.getForms()[0];
+        webForm.setParameter("j_username", TOMCAT);
+        webForm.setParameter("j_password", TOMCAT_PSWD);
+        webForm.getSubmitButtons()[0].click();
+
+        //it redirects to page, which should contain text sent in first form
+        response = conversation.getCurrentPage();
+        assertTrue("There should be a text '{\"val\":\"test\"}' in response. " + response.getText(), response.getText().contains("{\"val\":\"test\"}"));
+
+        // repeating the test to make sure we're able to read data without SAML roundtrip
+        request = new PostMethodWebRequest(url.toString()+"/json-test", new StringInputStream("{\"val\":\"test2\"}"), "application/json");
+        response = conversation.getResponse(request);
+        assertTrue("There should be a text '{\"val\":\"test2\"}' in response. " + response.getText(), response.getText().contains("{\"val\":\"test2\"}"));
+    }
+
+    @Test
+    @OperateOnDeployment("service-provider")
+    public void testJSONPut(@ArquillianResource URL url) throws Exception {
+
+        //send text as a value in post form
+        WebRequest request = new PutMethodWebRequest(url.toString()+"/json-test", new StringInputStream("{\"val\":\"test\"}"), "application/json");
+        WebConversation conversation = new WebConversation();
+        WebResponse response = conversation.getResponse(request);
+
+        //it redirects to idp -> fill username and password
+        WebForm webForm = response.getForms()[0];
+        webForm.setParameter("j_username", TOMCAT);
+        webForm.setParameter("j_password", TOMCAT_PSWD);
+        webForm.getSubmitButtons()[0].click();
+
+        //it redirects to page, which should contain text sent in first form
+        response = conversation.getCurrentPage();
+        assertTrue("There should be a text '{\"val\":\"test\"}' in response. " + response.getText(), response.getText().contains("{\"val\":\"test\"}"));
+
+        // repeating the test to make sure we're able to read data without SAML roundtrip
+        request = new PutMethodWebRequest(url.toString()+"/json-test", new StringInputStream("{\"val\":\"test2\"}"), "application/json");
+        response = conversation.getResponse(request);
+        assertTrue("There should be a text '{\"val\":\"test2\"}' in response. " + response.getText(), response.getText().contains("{\"val\":\"test2\"}"));
+    }
+
+    @Test
+    @OperateOnDeployment("service-provider")
+    public void testMultipartFormPost(@ArquillianResource URL url) throws Exception {
+
+        //send text as a value in post form
+        WebRequest request = new GetMethodWebRequest(url.toString()+"/freezone/mf-post-test.jsp");
+        WebConversation conversation = new WebConversation();
+        WebResponse response = conversation.getResponse(request);
+        WebForm webForm = response.getForms()[0];
+        webForm.setParameter("test-data", TEXT);
+        webForm.getSubmitButtons()[0].click();
+
+        //it redirects to idp -> fill username and password
+        response = conversation.getCurrentPage();
+        webForm = response.getForms()[0];
+        webForm.setParameter("j_username", TOMCAT);
+        webForm.setParameter("j_password", TOMCAT_PSWD);
+        webForm.getSubmitButtons()[0].click();
+
+        //it redirects to page, which should contain text sent in first form
+        response = conversation.getCurrentPage();
+        assertTrue("There should be a text 'Test Data: "+TEXT+"' from first form in response. " + response.getText(), response.getText().contains("Test Data: " + TEXT));
+
+        // repeating the test to make sure we're able to read data without SAML roundtrip
+        request = new GetMethodWebRequest(url.toString()+"/freezone/mf-post-test.jsp");
+        response = conversation.getResponse(request);
+        webForm = response.getForms()[0];
+        webForm.setParameter("test-data", TEXT + "2");
+        webForm.getSubmitButtons()[0].click();
+        response = conversation.getCurrentPage();
+        assertTrue("There should be a text 'Test Data: "+TEXT+"' from first form in response. " + response.getText(), response.getText().contains("Test Data: " + TEXT+ "2"));
     }
 
     static class SecurityDomainsSetup extends AbstractSecurityDomainsServerSetupTask {
