@@ -33,6 +33,7 @@ import java.util.Base64;
 import java.util.Collections;
 import java.util.OptionalLong;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.StampedLock;
 
@@ -88,7 +89,10 @@ public class DistributableSessionManager implements UndertowSessionManager {
     public synchronized void stop() {
         if (!this.lifecycleStamp.isPresent()) {
             try {
-                this.lifecycleStamp = OptionalLong.of(this.lifecycleLock.writeLockInterruptibly());
+                long stamp = this.lifecycleLock.tryWriteLock(this.manager.getDefaultMaxInactiveInterval().getSeconds(), TimeUnit.SECONDS);
+                if (stamp != 0) {
+                    this.lifecycleStamp = OptionalLong.of(stamp);
+                }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
