@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="urn:jboss:module:1.1" name="com.sun.jsf-impl" slot="mojarra-1.2">
+        <dependencies>
+               <module name="javax.faces.api" slot="mojarra-1.2"/>
+               <module name="javaee.api"/>
+               <module name="javax.servlet.jstl.api"/>
+        </dependencies>
+        <resources>
+                <resource-root path="jsf-impl-1.2.15.b01-redhat-12.jar"/>
+        </resources>
+</module>
