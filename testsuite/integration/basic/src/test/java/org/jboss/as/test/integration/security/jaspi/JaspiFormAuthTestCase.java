@@ -31,6 +31,7 @@ import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.as.arquillian.api.ServerSetup;
+import org.jboss.as.test.shared.TestSuiteEnvironment;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
@@ -65,7 +66,7 @@ public class JaspiFormAuthTestCase {
     @Test
     public void testJaspiFormAuth(@ArquillianResource URL url) throws Exception {
         try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
-            final HttpGet httpGet = new HttpGet("http://localhost:8080/test/");
+            final HttpGet httpGet = new HttpGet("http://" + TestSuiteEnvironment.getServerAddress() + ":" + TestSuiteEnvironment.getHttpPort() + "/test/");
             HttpResponse response = httpClient.execute(httpGet);
             assertEquals(200, response.getStatusLine().getStatusCode());
         }
