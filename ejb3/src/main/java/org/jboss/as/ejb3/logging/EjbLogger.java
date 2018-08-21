@@ -3133,9 +3133,6 @@ public interface EjbLogger extends BasicLogger {
     @Message(id = 497, value = "Failed to persist timer %s on startup. This is likely due to another cluster member making the same change, and should not affect operation.")
     void failedToPersistTimerOnStartup(TimerImpl activeTimer, @Cause  Exception e);
 
-    @Message(id = 498, value = "Business view method %s declared final in %s")
-    DeploymentUnitProcessingException businessViewMethodDeclaredFinal(String method, String bean);
-
     @LogMessage(level = ERROR)
     @Message(id = 500, value = "Legacy org.jboss.security.annotation.SecurityDomain annotation is used in class: %s, please use org.jboss.ejb3.annotation.SecurityDomain instead.")
     void legacySecurityDomainAnnotationIsUsed(String cls);
@@ -3143,4 +3140,20 @@ public interface EjbLogger extends BasicLogger {
     @LogMessage(level = ERROR)
     @Message(id = 502, value = "Exception checking if timer %s should run")
     void exceptionCheckingIfTimerShouldRun(Timer timer, @Cause Exception e);
+
+    @LogMessage(level = WARN)
+    @Message(id = 503, value = "[EJB3.2 spec, section 5.6.4] Message Driven Bean 'onMessage' method can not be final (MDB: %s).")
+    void mdbOnMessageMethodCantBeFinal(String className);
+
+    @LogMessage(level = WARN)
+    @Message(id = 504, value = "[EJB3.2 spec, section 5.6.4] Message Driven Bean 'onMessage' method can not be private (MDB: %s).")
+    void mdbOnMessageMethodCantBePrivate(String className);
+
+    @LogMessage(level = WARN)
+    @Message(id = 505, value = "[EJB3.2 spec, section 5.6.4] Message Driven Bean 'onMessage' method can not be static (MDB: %s).")
+    void mdbOnMessageMethodCantBeStatic(String className);
+
+    @LogMessage(level = WARN)
+    @Message(id = 506, value = "[EJB3.2 spec, section 5.6.2] Message Driven Bean can not have a 'finalize' method. (MDB: %s)")
+    void mdbCantHaveFinalizeMethod(String className);
 }
