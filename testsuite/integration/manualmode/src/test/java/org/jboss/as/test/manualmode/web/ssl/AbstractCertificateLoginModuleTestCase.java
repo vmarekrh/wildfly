@@ -175,7 +175,7 @@ public abstract class AbstractCertificateLoginModuleTestCase {
         @Override
         public void setup(ManagementClient managementClient, String containerId) throws Exception {
 
-            FileUtils.deleteDirectory(WORK_DIR);
+            deleteWorkDir();
             WORK_DIR.mkdirs();
             Utils.createKeyMaterial(WORK_DIR);
 
@@ -233,6 +233,10 @@ public abstract class AbstractCertificateLoginModuleTestCase {
             TRACE_SECURITY.tearDown(managementClient, null);
 
         }
+    }
+
+    protected static void deleteWorkDir() throws IOException {
+        FileUtils.deleteDirectory(WORK_DIR);
     }
 
 }
