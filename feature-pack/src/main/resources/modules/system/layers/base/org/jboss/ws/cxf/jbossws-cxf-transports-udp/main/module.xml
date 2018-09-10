@@ -41,5 +41,6 @@
             <include path="META-INF"/>
           </imports>
         </module>
+        <module name="org.jboss.logging"/>
     </dependencies>
 </module>

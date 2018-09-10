@@ -204,7 +204,7 @@
         <version.org.jboss.ws.spi>3.1.4.Final-redhat-1</version.org.jboss.ws.spi>
         <version.org.jboss.ws.common>3.1.5.Final-redhat-1</version.org.jboss.ws.common>
         <version.org.jboss.ws.common.tools>1.2.4.Final-redhat-1</version.org.jboss.ws.common.tools>
-        <version.org.jboss.ws.cxf>5.1.10.Final-redhat-1</version.org.jboss.ws.cxf>
+        <version.org.jboss.ws.cxf>5.1.11.Final-redhat-00001</version.org.jboss.ws.cxf>
         <version.org.jboss.ws.jaxws-undertow-httpspi>1.0.1.Final-redhat-1</version.org.jboss.ws.jaxws-undertow-httpspi>
         <version.org.jgroups>3.6.14.Final-redhat-1</version.org.jgroups>
         <version.org.jgroups.azure>1.1.0.Final-redhat-1</version.org.jgroups.azure>
@@ -5831,6 +5831,10 @@
                         <groupId>org.jboss.ws.projects</groupId>
                         <artifactId>jaxws-undertow-httpspi</artifactId>
                     </exclusion>
+                    <exclusion>
+                        <groupId>org.jboss.logging</groupId>
+                        <artifactId>jboss-logging</artifactId>
+                    </exclusion>
                 </exclusions>
             </dependency>
 
@@ -5842,6 +5846,10 @@
                     <exclusion>
                         <groupId>com.fasterxml.woodstox</groupId>
                         <artifactId>woodstox-core</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.jboss.logging</groupId>
+                        <artifactId>jboss-logging</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>

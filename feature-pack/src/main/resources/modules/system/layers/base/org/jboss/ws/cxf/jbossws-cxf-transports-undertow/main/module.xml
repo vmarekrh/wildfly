@@ -45,5 +45,6 @@
           </imports>
         </module>
         <module name="io.undertow.core"/>
+        <module name="org.jboss.logging"/>
     </dependencies>
 </module>
