@@ -46,11 +46,19 @@ import java.util.concurrent.TimeUnit;
 @RunAsClient
 public class JspELTestCase {
 
+    private static final String Servlet_No_Spec_War = "jsp-el-test-no-web-xml";
     private static final String Servlet_Spec_3_1_War = "jsp-el-test-3_1_servlet_spec";
     private static final String Servlet_Spec_3_0_War = "jsp-el-test-3_0_servlet_spec";
 
-    @Deployment(name = Servlet_Spec_3_1_War)
+    @Deployment(name = Servlet_No_Spec_War)
     public static WebArchive deploy() {
+        return ShrinkWrap.create(WebArchive.class)
+                .addClasses(DummyConstants.class, DummyEnum.class)
+                .addAsWebResource(JspELTestCase.class.getResource("jsp-with-el.jsp"), "index.jsp");
+    }
+
+    @Deployment(name = Servlet_Spec_3_1_War)
+    public static WebArchive deploy31War() {
         return ShrinkWrap.create(WebArchive.class)
                 .addClasses(DummyConstants.class, DummyEnum.class)
                 .addAsWebInfResource(JspELTestCase.class.getResource("web-app_3_1.xml"), "web.xml")
@@ -65,6 +73,22 @@ public class JspELTestCase {
                 .addAsWebResource(JspELTestCase.class.getResource("jsp-with-el.jsp"), "index.jsp");
     }
 
+    final String POSSIBLE_ISSUES_LINKS = "Might be caused by: https://issues.jboss.org/browse/WFLY-6939 or" +
+            " https://issues.jboss.org/browse/WFLY-11065 or https://issues.jboss.org/browse/WFLY-11086";
+
+    /**
+     * Test that for web application using default version of servlet spec, EL expressions that use implicitly imported
+     * classes from <code>java.lang</code> package are evaluated correctly
+     *
+     * @param url
+     * @throws Exception
+     */
+    @OperateOnDeployment(Servlet_No_Spec_War)
+    @Test
+    public void testJavaLangImplicitClassELEvaluation(@ArquillianResource URL url) throws Exception {
+        commonTestPart(url, POSSIBLE_ISSUES_LINKS);
+        commonTestPart(url, POSSIBLE_ISSUES_LINKS);
+    }
 
     /**
      * Test that for web application using 3.1 version of servlet spec, EL expressions that use implicitly imported classes from <code>java.lang</code>
@@ -75,12 +99,21 @@ public class JspELTestCase {
      */
     @OperateOnDeployment(Servlet_Spec_3_1_War)
     @Test
-    public void testJavaLangImplicitClassELEvaluation(@ArquillianResource URL url) throws Exception {
+    public void testJavaLangImplicitClassELEvaluation31(@ArquillianResource URL url) throws Exception {
+        commonTestPart(url, POSSIBLE_ISSUES_LINKS);
+        commonTestPart(url, POSSIBLE_ISSUES_LINKS);
+    }
+
+    private void commonTestPart(final URL url, final String possibleCausingIssues) throws Exception {
         final String responseBody = HttpRequest.get(url + "index.jsp", 10, TimeUnit.SECONDS);
-        Assert.assertTrue("Unexpected EL evaluation for ${Boolean.TRUE}", responseBody.contains("Boolean.TRUE: --- " + Boolean.TRUE + " ---"));
-        Assert.assertTrue("Unexpected EL evaluation for ${Integer.MAX_VALUE}", responseBody.contains("Integer.MAX_VALUE: --- " + Integer.MAX_VALUE + " ---"));
-        Assert.assertTrue("Unexpected EL evaluation for ${DummyConstants.FOO}", responseBody.contains("DummyConstants.FOO: --- " + DummyConstants.FOO + " ---"));
-        Assert.assertTrue("Unexpected EL evaluation for ${DummyEnum.VALUE}", responseBody.contains("DummyEnum.VALUE: --- " + DummyEnum.VALUE + " ---"));
+        Assert.assertTrue("Unexpected EL evaluation for ${Boolean.TRUE}; " + possibleCausingIssues,
+                responseBody.contains("Boolean.TRUE: --- " + Boolean.TRUE + " ---"));
+        Assert.assertTrue("Unexpected EL evaluation for ${Integer.MAX_VALUE}; " + possibleCausingIssues,
+                responseBody.contains("Integer.MAX_VALUE: --- " + Integer.MAX_VALUE + " ---"));
+        Assert.assertTrue("Unexpected EL evaluation for ${DummyConstants.FOO}; " + possibleCausingIssues,
+                responseBody.contains("DummyConstants.FOO: --- " + DummyConstants.FOO + " ---"));
+        Assert.assertTrue("Unexpected EL evaluation for ${DummyEnum.VALUE}; " + possibleCausingIssues,
+                responseBody.contains("DummyEnum.VALUE: --- " + DummyEnum.VALUE + " ---"));
     }
 
     /**
