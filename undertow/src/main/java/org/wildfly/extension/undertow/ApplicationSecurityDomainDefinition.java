@@ -517,6 +517,7 @@ public class ApplicationSecurityDomainDefinition extends PersistentResourceDefin
                     .setNext(toWrap)
                     .setSecurityDomain(httpAuthenticationFactory.getSecurityDomain())
                     .setMechanismSupplier(() -> getAuthenticationMechanisms(selectedMechanisms))
+                    .setAuthenticationMode(deploymentInfo.getAuthenticationMode())
                     .setHttpExchangeSupplier(httpServerExchange -> new ElytronHttpExchange(httpServerExchange, scopeResolvers, scopeSessionListener) {
                         @Override
                         protected SessionManager getSessionManager() {
