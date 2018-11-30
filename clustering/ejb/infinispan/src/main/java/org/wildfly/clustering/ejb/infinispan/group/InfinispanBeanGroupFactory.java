@@ -106,7 +106,7 @@ public class InfinispanBeanGroupFactory<I, T> implements BeanGroupFactory<I, T> 
 
     @Override
     public boolean remove(I id) {
-        this.cache.getAdvancedCache().withFlags(Flag.IGNORE_RETURN_VALUES).remove(id);
+        this.cache.getAdvancedCache().withFlags(Flag.IGNORE_RETURN_VALUES).remove(this.createKey(id));
         return true;
     }
 
