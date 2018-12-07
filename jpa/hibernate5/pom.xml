@@ -97,6 +97,10 @@
             <scope>provided</scope>
             <exclusions>
               <exclusion>
+                 <groupId>dom4j</groupId>
+                 <artifactId>dom4j</artifactId>
+              </exclusion>
+              <exclusion>
                  <groupId>org.hibernate.common</groupId>
                  <artifactId>hibernate-commons-annotations</artifactId>
               </exclusion>
@@ -111,8 +115,16 @@
             <scope>provided</scope>
             <exclusions>
               <exclusion>
+                 <groupId>dom4j</groupId>
+                 <artifactId>dom4j</artifactId>
+              </exclusion>
+              <exclusion>
                  <groupId>org.hibernate.common</groupId>
                  <artifactId>hibernate-commons-annotations</artifactId>
+              </exclusion>
+              <exclusion>
+                 <groupId>xml-apis</groupId>
+                 <artifactId>xml-apis</artifactId>
               </exclusion>
           </exclusions>
  
