@@ -3998,10 +3998,6 @@
                         <groupId>org.jboss.logging</groupId>
                         <artifactId>jboss-logging-annotations</artifactId>
                     </exclusion>
-                    <exclusion>
-                        <groupId>xml-apis</groupId>
-                        <artifactId>xml-apis</artifactId>
-                    </exclusion>
                 </exclusions>
             </dependency>
 
