@@ -73,6 +73,7 @@ public class EeExtension implements Extension {
         rootResource.registerSubModel(ManagedExecutorServiceResourceDefinition.INSTANCE);
         rootResource.registerSubModel(ManagedScheduledExecutorServiceResourceDefinition.INSTANCE);
         rootResource.registerSubModel(new DefaultBindingsResourceDefinition(new DefaultBindingsConfigurationProcessor()));
+        rootResource.registerSubModel(GlobalDirectoryResourceDefinition.INSTANCE);
 
         subsystem.registerXMLElementWriter(EESubsystemXmlPersister.INSTANCE);
 
@@ -89,6 +90,7 @@ public class EeExtension implements Extension {
         context.setSubsystemXmlMapping(SUBSYSTEM_NAME, Namespace.EE_2_0.getUriString(), EESubsystemParser20::new);
         context.setSubsystemXmlMapping(SUBSYSTEM_NAME, Namespace.EE_3_0.getUriString(), EESubsystemParser20::new);
         context.setSubsystemXmlMapping(SUBSYSTEM_NAME, Namespace.EE_4_0.getUriString(), EESubsystemParser40::new);
+        context.setSubsystemXmlMapping(SUBSYSTEM_NAME, Namespace.EE_5_0.getUriString(), EESubsystemParser50::new);
         context.setProfileParsingCompletionHandler(new BeanValidationProfileParsingCompletionHandler());
     }
 

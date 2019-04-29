@@ -64,7 +64,12 @@ public class EeSubsystemTestCase extends AbstractSubsystemBaseTest {
 
     @Override
     protected String getSubsystemXsdPath() throws Exception {
-        return "schema/jboss-as-ee_4_0.xsd";
+        return "schema/jboss-as-ee_5_0.xsd";
+    }
+
+    @Override
+    protected AdditionalInitialization createAdditionalInitialization() {
+        return AdditionalInitialization.withCapabilities(EeCapabilities.PATH_MANAGER_CAPABILITY);
     }
 
     @Test
@@ -119,7 +124,7 @@ public class EeSubsystemTestCase extends AbstractSubsystemBaseTest {
     private void testTransformers1_0_x_reject(ModelTestControllerVersion controllerVersion, ModelVersion modelVersion) throws Exception {
         String subsystemXml = readResource("subsystem.xml");
         //Use the non-runtime version of the extension which will happen on the HC
-        KernelServicesBuilder builder = createKernelServicesBuilder(AdditionalInitialization.MANAGEMENT);
+        KernelServicesBuilder builder = createKernelServicesBuilder(createAdditionalInitialization());
 
         List<ModelNode> xmlOps = builder.parseXml(subsystemXml);
 
@@ -156,7 +161,7 @@ public class EeSubsystemTestCase extends AbstractSubsystemBaseTest {
     private void testTransformers1_1_x_reject(ModelTestControllerVersion controllerVersion) throws Exception {
             String subsystemXml = readResource("subsystem.xml");
             //Use the non-runtime version of the extension which will happen on the HC
-            KernelServicesBuilder builder = createKernelServicesBuilder(AdditionalInitialization.MANAGEMENT);
+            KernelServicesBuilder builder = createKernelServicesBuilder(createAdditionalInitialization());
 
             List<ModelNode> xmlOps = builder.parseXml(subsystemXml);
 
@@ -172,7 +177,8 @@ public class EeSubsystemTestCase extends AbstractSubsystemBaseTest {
             .addFailedAttribute(PathAddress.pathAddress(EeExtension.PATH_SUBSYSTEM, PathElement.pathElement(EESubsystemModel.CONTEXT_SERVICE)), REJECTED_RESOURCE)
             .addFailedAttribute(PathAddress.pathAddress(EeExtension.PATH_SUBSYSTEM, PathElement.pathElement(EESubsystemModel.MANAGED_THREAD_FACTORY)), REJECTED_RESOURCE)
             .addFailedAttribute(PathAddress.pathAddress(EeExtension.PATH_SUBSYSTEM, PathElement.pathElement(EESubsystemModel.MANAGED_EXECUTOR_SERVICE)), REJECTED_RESOURCE)
-            .addFailedAttribute(PathAddress.pathAddress(EeExtension.PATH_SUBSYSTEM, PathElement.pathElement(EESubsystemModel.MANAGED_SCHEDULED_EXECUTOR_SERVICE)), REJECTED_RESOURCE);
+            .addFailedAttribute(PathAddress.pathAddress(EeExtension.PATH_SUBSYSTEM, PathElement.pathElement(EESubsystemModel.MANAGED_SCHEDULED_EXECUTOR_SERVICE)), REJECTED_RESOURCE)
+            .addFailedAttribute(PathAddress.pathAddress(EeExtension.PATH_SUBSYSTEM, PathElement.pathElement(EESubsystemModel.GLOBAL_DIRECTORY)), REJECTED_RESOURCE);
 
             ModelTestUtils.checkFailedTransformedBootOperations(mainServices, modelVersion, xmlOps, config);
         }

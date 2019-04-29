@@ -39,6 +39,53 @@ The optional `meta-inf` attribute, which defaults to `true`, indicates
 if the Module's `META-INF` path should be available to the deployment's
 class loader.
 
+[[global-directories]]
+== Global Directories
+Global modules can be used to shared common libraries across all deployed applications, but it could be unpractical if the name of a shared library changes very often or if there are many libraries you want to share. Both cases requires changes in the module.xml you are sharing as a global module.
+
+The EE subsystem allows the configuration of global directories, which are directories scanned to include additional .jar files and resources as dependencies of your deployed applications.
+
+You can configure a global directory using the following operation:
+
+[source,xml,options="nowrap"]
+----
+  [standalone@localhost:9990 /] /subsystem=ee/global-directory=my-common-libs:add(path=lib, relative-to=jboss.home.dir)
+----
+
+The following attributes are available on the global-directory resource:
+
+* path: The path of the directory to scan. (Mandatory)
+* relative-to: The name of another previously named path, or of one of the standard paths provided by the system. (Optional)
+
+When a new `global-directory` is created, the server creates a module that will have one https://jboss-modules.github.io/jboss-modules/manual/#path-resource-loader[Path Resource Loader] created using 'path' and 'relative-to' attributes and one https://jboss-modules.github.io/jboss-modules/manual/#jar-resource-loader[Jar Resource loader] for each jar file included in this directory and subdirectories.
+
+The 'Path Resource Loader' will make available any file as a resource to the applications. The 'Jar Resource loader' will make available any class inside of the jar file to the applications.
+
+For example, suppose you have configured one a global directory pointing to the following directory:
+
+....
+my-common-libs
+|
+|-- library-1.jar
+|-- properties-1.properties
+|
+|─ sub-dir
+|   |-- library-2.jar
+    |-- properties-2.properties
+....
+
+properties-1.properties and sub-dir/properties-2.properties files will be available as resources in the class loader of your application. You could access to those files using the context ClassLoader of your current thread:
+
+  Thread.currentThread().getContextClassLoader().getResourceAsStream("properties-1.properties");
+  Thread.currentThread().getContextClassLoader().getResourceAsStream("sub-dir/properties-2.properties");
+
+The classes inside of library-1.jar and sub-dir/library-2.jar will be also available. However, there could be name collisions between classes inside of each jar. The jar resources of a global directory module are configured iterating over all jar files in alphabetical order and size descending, and this order governs the class loading order of the classes available on each jar resource.
+
+The module created from the shared directory is loaded as soon as the first application is deployed in the server. That means, if the server is started/restarted and there are no applications deployed, then the global directory is neither scanned nor the module loaded.
+
+In case of domain mode or distributed environments, it is the user responsibility to make the content of the configured global directory consistent across all the server instances, as well as distribute the jar files that they contain.
+
+
 [[ear-subdeployments-isolation]]
 == EAR Subdeployments Isolation
 
