@@ -18,7 +18,8 @@ package org.jboss.as.ee.subsystem;
 
 import static org.wildfly.common.Assert.checkNotNullParam;
 
-import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -26,16 +27,16 @@ import org.jboss.as.controller.services.path.AbsolutePathService;
 import org.jboss.as.controller.services.path.PathEntry;
 import org.jboss.as.controller.services.path.PathManager;
 import org.jboss.as.ee.subsystem.GlobalDirectoryResourceDefinition.GlobalDirectory;
-import org.jboss.msc.service.Service;
+import org.jboss.modules.PathUtils;
+import org.jboss.msc.Service;
 import org.jboss.msc.service.StartContext;
 import org.jboss.msc.service.StartException;
 import org.jboss.msc.service.StopContext;
 
-public class GlobalDirectoryService implements Service<File> {
+public class GlobalDirectoryService implements Service {
     private final Supplier<PathManager> pathManagerSupplier;
     private final String path;
     private final String relativeTo;
-    private File resolvedPath;
     private final PathResolver pathResolver;
     private final Consumer<GlobalDirectory> consumer;
     private final String name;
@@ -59,13 +60,7 @@ public class GlobalDirectoryService implements Service<File> {
 
     @Override
     public void stop(StopContext context) {
-        resolvedPath = null;
         pathResolver.clear();
-    }
-
-    @Override
-    public File getValue() throws IllegalStateException, IllegalArgumentException {
-        return resolvedPath;
     }
 
     private static class PathResolver {
@@ -88,10 +83,10 @@ public class GlobalDirectoryService implements Service<File> {
             return this;
         }
 
-        File resolve() {
+        Path resolve() {
+            String relativeToPath = AbsolutePathService.isAbsoluteUnixOrWindowsPath(path) ? null : relativeTo;
+            Path resolvedPath = Paths.get(PathUtils.canonicalize(pathManager.resolveRelativePathEntry(path, relativeToPath))).normalize();
             if (relativeTo != null) {
-                String relativeToPath = AbsolutePathService.isAbsoluteUnixOrWindowsPath(path) ? null : relativeTo;
-                File resolvedPath = new File(pathManager.resolveRelativePathEntry(path, relativeToPath));
                 callbackHandle = pathManager.registerCallback(relativeTo, new org.jboss.as.controller.services.path.PathManager.Callback() {
 
                     @Override
@@ -106,11 +101,8 @@ public class GlobalDirectoryService implements Service<File> {
                         // Service dependencies should trigger a stop and start.
                     }
                 }, PathManager.Event.REMOVED, PathManager.Event.UPDATED);
-
-                return resolvedPath;
-            } else {
-                return new File(path);
             }
+            return resolvedPath;
         }
 
         void clear() {

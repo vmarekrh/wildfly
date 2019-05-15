@@ -22,7 +22,7 @@ import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.FIL
 import static org.jboss.as.ee.subsystem.EeCapabilities.EE_GLOBAL_DIRECTORY_CAPABILITY;
 import static org.jboss.as.ee.subsystem.EeCapabilities.PATH_MANAGER_CAPABILITY;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
@@ -157,15 +157,15 @@ public class GlobalDirectoryResourceDefinition extends PersistentResourceDefinit
     }
 
     public static final class GlobalDirectory {
-        private final File resolvedPath;
+        private final Path resolvedPath;
         private final String name;
 
-        public GlobalDirectory(File resolvedPath, String name) {
+        public GlobalDirectory(Path resolvedPath, String name) {
             this.resolvedPath = resolvedPath;
             this.name = name;
         }
 
-        public File getResolvedPath() {
+        public Path getResolvedPath() {
             return resolvedPath;
         }
 

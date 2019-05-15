@@ -92,7 +92,7 @@ public class GlobalDirectoryDependencyProcessor implements DeploymentUnitProcess
 
     @Override
     public void undeploy(DeploymentUnit context) {
-        ServiceController<?> requiredService = context.getServiceRegistry().getRequiredService(context.getServiceName());
+        ServiceController<?> requiredService = context.getServiceRegistry().getService(context.getServiceName().append("directory-services-ready"));
         if (requiredService != null) {
             requiredService.setMode(ServiceController.Mode.REMOVE);
         }

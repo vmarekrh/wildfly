@@ -16,7 +16,8 @@
 
 package org.jboss.as.ee.subsystem;
 
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -67,7 +68,7 @@ public class GlobalDirectoryDeploymentService implements Service {
 
         //validate all exists
         for(GlobalDirectory globalDirectory : dataSorted) {
-            if (!globalDirectory.getResolvedPath().exists()) {
+            if (!Files.exists(globalDirectory.getResolvedPath())) {
                 throw EeLogger.ROOT_LOGGER.globalDirectoryDoNotExist(globalDirectory.getResolvedPath().toString(), globalDirectory.getName());
             }
         }
@@ -90,9 +91,9 @@ public class GlobalDirectoryDeploymentService implements Service {
 
         synchronized (lock) {
             for (GlobalDirectory data : dataSorted) {
-                File resolvedPath = data.getResolvedPath();
+                Path resolvedPath = data.getResolvedPath();
                 String moduleName = data.getModuleName();
-                ModuleIdentifier moduleIdentifier = externalModuleService.addExternalModule(moduleName, resolvedPath.getAbsolutePath());
+                ModuleIdentifier moduleIdentifier = externalModuleService.addExternalModule(moduleName, resolvedPath.toString());
                 moduleSpecification.addSystemDependency(new ModuleDependency(moduleLoader, moduleIdentifier, false, true, true, false));
             }
         }
