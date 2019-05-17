@@ -21,6 +21,8 @@
  */
 package org.jboss.as.test.manualmode.ee.globaldirectory;
 
+import org.jboss.arquillian.container.test.api.ContainerController;
+import org.jboss.arquillian.container.test.api.Deployer;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -32,7 +34,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
-import java.net.URL;
+//import java.net.URL;
 
 /**
  * @author Vratislav Marek (vmarek@redhat.com)
@@ -44,8 +46,10 @@ public class EeSubsystemGlobalDirectoryDomainTestCase extends EESubsystemGlobalD
     private static Logger LOGGER = Logger.getLogger(EeSubsystemGlobalDirectoryDomainTestCase.class);
 
     @ArquillianResource
-    private URL url;
+    private static ContainerController containerController;
 
+    @ArquillianResource
+    Deployer deployer;
 
     @BeforeClass
     public static void setupDomain() {

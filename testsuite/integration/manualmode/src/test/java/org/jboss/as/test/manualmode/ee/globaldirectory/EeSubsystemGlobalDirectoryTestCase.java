@@ -31,7 +31,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.net.URL;
+//import java.net.URL;
 
 /**
  * @author Vratislav Marek (vmarek@redhat.com)
@@ -48,8 +48,8 @@ public class EeSubsystemGlobalDirectoryTestCase extends EESubsystemGlobalDirecto
     @ArquillianResource
     Deployer deployer;
 
-    @ArquillianResource
-    private URL url;
+//    @ArquillianResource
+//    private URL url;
 
 
     @Before
