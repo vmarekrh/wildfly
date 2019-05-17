@@ -21,22 +21,40 @@
  */
 package org.jboss.as.test.smoke.ee.globaldirectory;
 
+import org.jboss.arquillian.container.test.api.RunAsClient;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.as.arquillian.api.ContainerResource;
+import org.jboss.as.arquillian.container.ManagementClient;
+import org.jboss.as.controller.client.helpers.ClientConstants;
+import org.jboss.dmr.ModelNode;
 import org.jboss.logging.Logger;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import java.io.IOException;
+
+import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.INCLUDE_RUNTIME;
+import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.OP;
+import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.READ_RESOURCE_OPERATION;
+import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.RESULT;
 
 /**
  * @author Vratislav Marek (vmarek@redhat.com)
  **/
+@RunWith(Arquillian.class)
+@RunAsClient
 public class EeSubsystemGlobalDirectoryTestCase {
 
+    private static final String FIRST_GLOBAL_DIRECTORY_NAME = "";
+    private static final String FIRST_GLOBAL_DIRECTORY_PATH = "";
+
+    private static final String SECOND_GLOBAL_DIRECTORY_NAME = "";
+    private static final String SECOND_GLOBAL_DIRECTORY_PATH = "";
 
     private static Logger LOGGER = Logger.getLogger(EeSubsystemGlobalDirectoryTestCase.class);
 
-    @Before
-    public void setup() {
-    }
-
+    @ContainerResource
+    private ManagementClient managementClient;
 
     /*
     Scenario 1 - exist
@@ -49,8 +67,19 @@ public class EeSubsystemGlobalDirectoryTestCase {
     Check if global-directory not exist
     */
     @Test
-    public void testAddAndRemoveSharedLib() {
+    public void testAddAndRemoveSharedLib() throws IOException {
+        register(FIRST_GLOBAL_DIRECTORY_NAME, FIRST_GLOBAL_DIRECTORY_PATH);
+        verifyProperlyRegistered(FIRST_GLOBAL_DIRECTORY_NAME, FIRST_GLOBAL_DIRECTORY_PATH);
+        remove(FIRST_GLOBAL_DIRECTORY_NAME);
+        verifyNonExist(FIRST_GLOBAL_DIRECTORY_NAME);
 
+        final ModelNode operation = new ModelNode();
+        ModelNode response = execute(operation);
+        ModelNode result = response.get(RESULT);
+
+        System.out.println("\n\n\n");
+        System.out.println(response);
+        System.out.println("\n\n\n");
     }
 
     /*
@@ -65,7 +94,40 @@ public class EeSubsystemGlobalDirectoryTestCase {
     */
     @Test
     public void testRejectSecondSharedLib() {
+        register(FIRST_GLOBAL_DIRECTORY_NAME, FIRST_GLOBAL_DIRECTORY_PATH);
+        verifyProperlyRegistered(FIRST_GLOBAL_DIRECTORY_NAME, FIRST_GLOBAL_DIRECTORY_PATH);
+        register(SECOND_GLOBAL_DIRECTORY_NAME, SECOND_GLOBAL_DIRECTORY_PATH);
+        verifyNonExist(SECOND_GLOBAL_DIRECTORY_NAME);
+    }
 
+    private void register(String name, String path) {
+
+    }
+
+    private void remove(String name) {
+
+    }
+
+    private void verifyProperlyRegistered(String name, String path) {
+
+    }
+
+    private void verifyNonExist(String name) {
+    }
+
+
+    private ModelNode execute(final ModelNode operation) throws
+            IOException {
+        final ModelNode result = managementClient.getControllerClient().execute(operation);
+        if (result.hasDefined(ClientConstants.OUTCOME) && ClientConstants.SUCCESS.equals(
+                result.get(ClientConstants.OUTCOME).asString())) {
+            return result;
+        } else if (result.hasDefined(ClientConstants.FAILURE_DESCRIPTION)) {
+            final String failureDesc = result.get(ClientConstants.FAILURE_DESCRIPTION).toString();
+            throw new RuntimeException(failureDesc);
+        } else {
+            throw new RuntimeException("Operation not successful; outcome = " + result.get(ClientConstants.OUTCOME));
+        }
     }
 
 }
