@@ -69,8 +69,6 @@ public class EeSubsystemGlobalDirectoryTestCase {
     // Path is int validated, can be added non-existed path
     private static final String SECOND_GLOBAL_DIRECTORY_PATH = "libs/lib2";
 
-    private static Logger LOGGER = Logger.getLogger(EeSubsystemGlobalDirectoryTestCase.class);
-
     @ContainerResource
     private ManagementClient managementClient;
 
@@ -103,10 +101,24 @@ public class EeSubsystemGlobalDirectoryTestCase {
         verifyNonExist(SECOND_GLOBAL_DIRECTORY_NAME);
     }
 
+    /**
+     * Register global directory
+     * Verify the response for success
+     *
+     * @param name Name of new global directory
+     * @param path Directory path to the libraries for the new global directory.
+     */
     private ModelNode register(String name, String path) throws IOException {
         return register(name, path, true);
     }
 
+    /**
+     * Register global directory
+     *
+     * @param name          Name of new global directory
+     * @param path          Directory path to the libraries for the new global directory.
+     * @param expectSuccess If is true verify the response for success, If is false only return operation result
+     */
     private ModelNode register(String name, String path, boolean expectSuccess) throws IOException {
         // /subsystem=ee/global-directory=<<name>>:add(path=<<path>>)
         final ModelNode address = new ModelNode();
@@ -127,6 +139,11 @@ public class EeSubsystemGlobalDirectoryTestCase {
         return response;
     }
 
+    /**
+     * Remove global directory
+     *
+     * @param name Name of global directory for removing
+     */
     private ModelNode remove(String name) throws IOException {
         // /subsystem=ee/global-directory=<<name>>:remove
         final ModelNode address = new ModelNode();
@@ -144,6 +161,12 @@ public class EeSubsystemGlobalDirectoryTestCase {
         return response;
     }
 
+    /**
+     * Verify if is global directory is registered and contains right path
+     *
+     * @param name Name of global directory for verify
+     * @param path Expected set path for current global directory
+     */
     private ModelNode verifyProperlyRegistered(String name, String path) throws IOException {
         // /subsystem=ee/global-directory=<<name>>:read-resource
         final ModelNode address = new ModelNode();
@@ -164,6 +187,11 @@ public class EeSubsystemGlobalDirectoryTestCase {
         return response;
     }
 
+    /**
+     * Verify global directory isn't exist
+     *
+     * @param name Name of global directory for verify
+     */
     private ModelNode verifyNonExist(String name) throws IOException {
         // /subsystem=ee/global-directory=<<name>>:read-resource
         final ModelNode address = new ModelNode();
@@ -181,6 +209,11 @@ public class EeSubsystemGlobalDirectoryTestCase {
         return response;
     }
 
+    /**
+     * Execute operation in wildfly
+     *
+     * @param operation Cli command represent in ModelNode interpretation
+     */
     private ModelNode execute(final ModelNode operation) throws
             IOException {
         return managementClient.getControllerClient().execute(operation);

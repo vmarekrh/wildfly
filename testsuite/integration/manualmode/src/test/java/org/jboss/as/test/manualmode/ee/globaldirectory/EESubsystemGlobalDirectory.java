@@ -25,4 +25,9 @@ package org.jboss.as.test.manualmode.ee.globaldirectory;
  * @author Vratislav Marek (vmarek@redhat.com)
  **/
 public class EESubsystemGlobalDirectory {
+
+    protected static final String SUBSYSTEM_EE = "ee";
+    protected static final String GLOBAL_DIRECTORY = "global-directory";
+
+
 }
