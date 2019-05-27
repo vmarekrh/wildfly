@@ -25,7 +25,6 @@ import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.as.arquillian.api.ContainerResource;
 import org.jboss.as.arquillian.container.ManagementClient;
-import org.jboss.as.controller.client.helpers.ClientConstants;
 import org.jboss.dmr.ModelNode;
 import org.jboss.logging.Logger;
 import org.junit.Test;
@@ -33,10 +32,23 @@ import org.junit.runner.RunWith;
 
 import java.io.IOException;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.ADD;
+import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.FAILED;
+import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.FAILURE_DESCRIPTION;
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.INCLUDE_RUNTIME;
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.OP;
+import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.OP_ADDR;
+import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.OUTCOME;
+import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.PATH;
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.READ_RESOURCE_OPERATION;
+import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.REMOVE;
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.RESULT;
+import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.SUBSYSTEM;
+import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.SUCCESS;
 
 /**
  * @author Vratislav Marek (vmarek@redhat.com)
@@ -45,89 +57,132 @@ import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.RES
 @RunAsClient
 public class EeSubsystemGlobalDirectoryTestCase {
 
-    private static final String FIRST_GLOBAL_DIRECTORY_NAME = "";
-    private static final String FIRST_GLOBAL_DIRECTORY_PATH = "";
+    private static final String SUBSYSTEM_EE = "ee";
+    private static final String GLOBAL_DIRECTORY = "global-directory";
+    private static final String DUPLICATE_ERROR_GLOBAL_DIRECTORY_CODE = "WFLYEE0121";
 
-    private static final String SECOND_GLOBAL_DIRECTORY_NAME = "";
-    private static final String SECOND_GLOBAL_DIRECTORY_PATH = "";
+    private static final String FIRST_GLOBAL_DIRECTORY_NAME = "sharelib1";
+    // Path is int validated, can be added non-existed path
+    private static final String FIRST_GLOBAL_DIRECTORY_PATH = "libs/lib1";
+
+    private static final String SECOND_GLOBAL_DIRECTORY_NAME = "sharelib2";
+    // Path is int validated, can be added non-existed path
+    private static final String SECOND_GLOBAL_DIRECTORY_PATH = "libs/lib2";
 
     private static Logger LOGGER = Logger.getLogger(EeSubsystemGlobalDirectoryTestCase.class);
 
     @ContainerResource
     private ManagementClient managementClient;
 
-    /*
-    Scenario 1 - exist
-
-    org.jboss.as.test.smoke.ee.globaldirectory.EeSubsystemGlobalDirectoryTestCase#testAddAndRemoveSharedLib
-
-    Define global-directory by CLI command
-    Verify if global-directory is registered properly with right arguments values
-    Remove global-directory by CLI command
-    Check if global-directory not exist
-    */
+    /**
+     * Test checking if exist global directory command
+     */
     @Test
     public void testAddAndRemoveSharedLib() throws IOException {
         register(FIRST_GLOBAL_DIRECTORY_NAME, FIRST_GLOBAL_DIRECTORY_PATH);
         verifyProperlyRegistered(FIRST_GLOBAL_DIRECTORY_NAME, FIRST_GLOBAL_DIRECTORY_PATH);
         remove(FIRST_GLOBAL_DIRECTORY_NAME);
         verifyNonExist(FIRST_GLOBAL_DIRECTORY_NAME);
-
-        final ModelNode operation = new ModelNode();
-        ModelNode response = execute(operation);
-        ModelNode result = response.get(RESULT);
-
-        System.out.println("\n\n\n");
-        System.out.println(response);
-        System.out.println("\n\n\n");
     }
 
-    /*
-    Scenario 2 - only one
-
-    org.jboss.as.test.smoke.ee.globaldirectory.EeSubsystemGlobalDirectoryTestCase#testRejectSecondSharedLib
-
-    Define global-directory by CLI command
-    Verify if global-directory is registered properly with right arguments values
-    Define second global-directory by CLI command
-    verify if is throwed correct error message about rejections second global-directory
-    */
+    /**
+     * Test checking rule for only one global directory
+     */
     @Test
-    public void testRejectSecondSharedLib() {
+    public void testRejectSecondSharedLib() throws IOException {
         register(FIRST_GLOBAL_DIRECTORY_NAME, FIRST_GLOBAL_DIRECTORY_PATH);
         verifyProperlyRegistered(FIRST_GLOBAL_DIRECTORY_NAME, FIRST_GLOBAL_DIRECTORY_PATH);
-        register(SECOND_GLOBAL_DIRECTORY_NAME, SECOND_GLOBAL_DIRECTORY_PATH);
+
+        final ModelNode response = register(SECOND_GLOBAL_DIRECTORY_NAME, SECOND_GLOBAL_DIRECTORY_PATH, false);
+        ModelNode outcome = response.get(OUTCOME);
+        assertThat("Registration of global directory failure!", outcome.asString(), is(FAILED));
+        final ModelNode failureDescription = response.get(FAILURE_DESCRIPTION);
+        assertThat("Error message doesn't contains information about duplicate global directory",
+                failureDescription.asString(), containsString(DUPLICATE_ERROR_GLOBAL_DIRECTORY_CODE));
+
         verifyNonExist(SECOND_GLOBAL_DIRECTORY_NAME);
     }
 
-    private void register(String name, String path) {
-
+    private ModelNode register(String name, String path) throws IOException {
+        return register(name, path, true);
     }
 
-    private void remove(String name) {
+    private ModelNode register(String name, String path, boolean expectSuccess) throws IOException {
+        // /subsystem=ee/global-directory=<<name>>:add(path=<<path>>)
+        final ModelNode address = new ModelNode();
+        address.add(SUBSYSTEM, SUBSYSTEM_EE)
+                .add(GLOBAL_DIRECTORY, name)
+                .protect();
+        final ModelNode operation = new ModelNode();
+        operation.get(OP).set(ADD);
+        operation.get(INCLUDE_RUNTIME).set(true);
+        operation.get(OP_ADDR).set(address);
+        operation.get(PATH).set(path);
 
+        ModelNode response = execute(operation);
+        ModelNode outcome = response.get(OUTCOME);
+        if (expectSuccess) {
+            assertThat("Registration of global directory " + name + " failure!", outcome.asString(), is(SUCCESS));
+        }
+        return response;
     }
 
-    private void verifyProperlyRegistered(String name, String path) {
+    private ModelNode remove(String name) throws IOException {
+        // /subsystem=ee/global-directory=<<name>>:remove
+        final ModelNode address = new ModelNode();
+        address.add(SUBSYSTEM, SUBSYSTEM_EE)
+                .add(GLOBAL_DIRECTORY, name)
+                .protect();
+        final ModelNode operation = new ModelNode();
+        operation.get(OP).set(REMOVE);
+        operation.get(INCLUDE_RUNTIME).set(true);
+        operation.get(OP_ADDR).set(address);
 
+        ModelNode response = execute(operation);
+        ModelNode outcome = response.get(OUTCOME);
+        assertThat("Remove of global directory " + name + "  failure!", outcome.asString(), is(SUCCESS));
+        return response;
     }
 
-    private void verifyNonExist(String name) {
+    private ModelNode verifyProperlyRegistered(String name, String path) throws IOException {
+        // /subsystem=ee/global-directory=<<name>>:read-resource
+        final ModelNode address = new ModelNode();
+        address.add(SUBSYSTEM, SUBSYSTEM_EE)
+                .add(GLOBAL_DIRECTORY, name)
+                .protect();
+        final ModelNode operation = new ModelNode();
+        operation.get(OP).set(READ_RESOURCE_OPERATION);
+        operation.get(INCLUDE_RUNTIME).set(true);
+        operation.get(OP_ADDR).set(address);
+
+        ModelNode response = execute(operation);
+        ModelNode outcome = response.get(OUTCOME);
+        assertThat("Read resource of global directory " + name + " failure!", outcome.asString(), is(SUCCESS));
+
+        final ModelNode result = response.get(RESULT);
+        assertThat("Global directory " + name + " have set wrong path!", result.get(PATH).asString(), is(path));
+        return response;
     }
 
+    private ModelNode verifyNonExist(String name) throws IOException {
+        // /subsystem=ee/global-directory=<<name>>:read-resource
+        final ModelNode address = new ModelNode();
+        address.add(SUBSYSTEM, SUBSYSTEM_EE)
+                .add(GLOBAL_DIRECTORY, name)
+                .protect();
+        final ModelNode operation = new ModelNode();
+        operation.get(OP).set(READ_RESOURCE_OPERATION);
+        operation.get(INCLUDE_RUNTIME).set(true);
+        operation.get(OP_ADDR).set(address);
+
+        ModelNode response = execute(operation);
+        ModelNode outcome = response.get(OUTCOME);
+        assertThat("Global directory " + name + " still exist!", outcome.asString(), not(SUCCESS));
+        return response;
+    }
 
     private ModelNode execute(final ModelNode operation) throws
             IOException {
-        final ModelNode result = managementClient.getControllerClient().execute(operation);
-        if (result.hasDefined(ClientConstants.OUTCOME) && ClientConstants.SUCCESS.equals(
-                result.get(ClientConstants.OUTCOME).asString())) {
-            return result;
-        } else if (result.hasDefined(ClientConstants.FAILURE_DESCRIPTION)) {
-            final String failureDesc = result.get(ClientConstants.FAILURE_DESCRIPTION).toString();
-            throw new RuntimeException(failureDesc);
-        } else {
-            throw new RuntimeException("Operation not successful; outcome = " + result.get(ClientConstants.OUTCOME));
-        }
+        return managementClient.getControllerClient().execute(operation);
     }
-
 }
