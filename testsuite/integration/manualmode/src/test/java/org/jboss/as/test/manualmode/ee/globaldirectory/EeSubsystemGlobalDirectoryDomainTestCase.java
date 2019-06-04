@@ -28,6 +28,8 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.as.arquillian.container.ManagementClient;
 import org.jboss.as.controller.client.ModelControllerClient;
+import org.jboss.as.controller.client.helpers.Operations;
+import org.jboss.as.controller.descriptions.ModelDescriptionConstants;
 import org.jboss.as.test.shared.TestSuiteEnvironment;
 import org.jboss.dmr.ModelNode;
 import org.jboss.logging.Logger;
@@ -51,7 +53,9 @@ import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.OUT
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.PATH;
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.READ_RESOURCE_OPERATION;
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.REMOVE;
+import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.RESTART;
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.RESULT;
+import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.SHUTDOWN;
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.SUBSYSTEM;
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.SUCCESS;
 //import java.net.URL;
@@ -64,6 +68,8 @@ import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.SUC
 public class EeSubsystemGlobalDirectoryDomainTestCase extends EESubsystemGlobalDirectory {
 
     private static final String CONTAINER = "default-jbossas";
+    /*Global Directory Name*/
+    private static final String GDN = "ShareLib";
 
     protected static final Logger LOGGER = Logger.getLogger(EeSubsystemGlobalDirectoryDomainTestCase.class);
 
@@ -114,6 +120,12 @@ public class EeSubsystemGlobalDirectoryDomainTestCase extends EESubsystemGlobalD
 
     @Test
     public void testAppSharedLib() throws IOException {
+//        solver.copyLibraries(null);
+//        solver.register(GDN);
+//        solver.verifyProperlyRegistered(GDN, solver.getLibraryPath());
+        solver.restartServer();
+        solver.restartServer();
+        solver.checkLogs(null);
 
     }
 
@@ -158,8 +170,38 @@ public class EeSubsystemGlobalDirectoryDomainTestCase extends EESubsystemGlobalD
             }
         }
 
-        protected void restartServer(){
+        protected String getLibraryPath() {
+            return library.getAbsolutePath();
+        }
 
+        protected void restartServer() throws IOException {
+            // TODO fix it - doens't reaction to restart, only shutdown
+            // shutdown --restart
+            final ModelNode operation = Operations.createOperation(SHUTDOWN);
+            operation.get(RESTART).set(true);
+
+            ModelNode response = client.execute(operation);
+            ModelNode outcome = response.get(OUTCOME);
+            assertThat("Restart server failure!", outcome.asString(), is(SUCCESS));
+        }
+
+        protected void copyLibraries(String[] expectedJars) {
+            copyLibraries(expectedJars, library.getAbsolutePath());
+        }
+
+        protected void copyLibraries(String[] expectedJars, String path) {
+            // TODO implements
+        }
+
+        /**
+         * @param expectedJars Expected Jars, the order matter, it will compare order of Jars in the log, null disable check
+         */
+        protected void checkLogs(String[] expectedJars) {
+            // TODO implements
+        }
+
+        protected void deployApplication(String appName) {
+            // TODO implements
         }
 
         /**
@@ -169,16 +211,17 @@ public class EeSubsystemGlobalDirectoryDomainTestCase extends EESubsystemGlobalD
          * @param name Name of new global directory
          */
         protected ModelNode register(String name) throws IOException {
-            return register(name, true);
+            return register(name, library.getAbsolutePath(), true);
         }
 
         /**
          * Register global directory
          *
          * @param name          Name of new global directory
+         * @param path
          * @param expectSuccess If is true verify the response for success, If is false only return operation result
          */
-        protected ModelNode register(String name, boolean expectSuccess) throws IOException {
+        protected ModelNode register(String name, String path, boolean expectSuccess) throws IOException {
             // /subsystem=ee/global-directory=<<name>>:add(path=<<path>>)
             final ModelNode address = new ModelNode();
             address.add(SUBSYSTEM, SUBSYSTEM_EE)
@@ -188,7 +231,7 @@ public class EeSubsystemGlobalDirectoryDomainTestCase extends EESubsystemGlobalD
             operation.get(OP).set(ADD);
             operation.get(INCLUDE_RUNTIME).set(true);
             operation.get(OP_ADDR).set(address);
-            operation.get(PATH).set(library.getAbsolutePath());
+            operation.get(PATH).set(path);
 
             ModelNode response = client.execute(operation);
             ModelNode outcome = response.get(OUTCOME);
