@@ -26,15 +26,14 @@ import org.jboss.arquillian.container.test.api.Deployer;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.as.arquillian.container.ManagementClient;
 import org.jboss.as.controller.client.ModelControllerClient;
-import org.jboss.as.controller.client.helpers.Operations;
 import org.jboss.as.test.integration.security.common.Utils;
 import org.jboss.as.test.shared.TestSuiteEnvironment;
 import org.jboss.dmr.ModelNode;
+import org.jboss.logging.Logger;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.wildfly.security.permission.ElytronPermission;
 import org.wildfly.test.manual.elytron.seccontext.EntryServlet;
 import org.wildfly.test.manual.elytron.seccontext.ReAuthnType;
@@ -57,9 +56,7 @@ import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.OUT
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.PATH;
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.READ_RESOURCE_OPERATION;
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.REMOVE;
-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.RESTART;
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.RESULT;
-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.SHUTDOWN;
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.SUBSYSTEM;
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.SUCCESS;
 import static org.jboss.as.test.shared.integration.ejb.security.PermissionUtils.createPermissionsXmlAsset;
@@ -76,15 +73,16 @@ public class EESubsystemGlobalDirectory {
 
     protected static final String tempDirPath = TestSuiteEnvironment.getTmpDir();
     protected static final File tempDir = new File(tempDirPath);
-
-    protected File library;
-    protected EeSubsystemGlobalDirectoryDomainTestCase.ClientHolder client;
+    protected static final int MAX_RECONNECTS_TRAY = 5;
 
     protected static final String CONTAINER = "default-jbossas";
     /*Global Directory Name*/
     protected static final String GDN = "ShareLib";
 
-//    protected static final Logger LOGGER = Logger.getLogger(EeSubsystemGlobalDirectoryDomainTestCase.class);
+    protected static final Logger LOGGER = Logger.getLogger(EESubsystemGlobalDirectory.class);
+
+    protected File library;
+    protected ClientHolder client;
 
     @ArquillianResource
     protected static ContainerController containerController;
@@ -97,16 +95,16 @@ public class EESubsystemGlobalDirectory {
     public void before() throws IOException {
         if (!containerController.isStarted(CONTAINER)) {
             containerController.start(CONTAINER);
-            prepare();
         }
+        prepare();
     }
 
     @After
     public void after() {
         if (containerController.isStarted(CONTAINER)) {
             containerController.stop(CONTAINER);
-            clear();
         }
+        clear();
     }
 
     protected void prepare() throws IOException {
@@ -118,13 +116,17 @@ public class EESubsystemGlobalDirectory {
         if (library != null) {
             library.delete();
         }
-        client = null;
+        disconnect();
     }
 
     protected void connect() {
         if (client == null) {
             client = ClientHolder.init();
         }
+    }
+
+    protected void disconnect() {
+        client = null;
     }
 
     protected void createLibDir() throws IOException {
@@ -144,15 +146,56 @@ public class EESubsystemGlobalDirectory {
         return library.getAbsolutePath();
     }
 
-    protected void restartServer() throws IOException {
-        // TODO fix it - doens't reaction to restart, only shutdown
-        // shutdown --restart
-        final ModelNode operation = Operations.createOperation(SHUTDOWN);
-        operation.get(RESTART).set(true);
+    protected void restartServer() throws InterruptedException {
+//        // shutdown --restart
+//        final ModelNode operation = Operations.createOperation(SHUTDOWN);
+//        operation.get(RESTART).set(true);
+//
+//        ModelNode response = client.execute(operation);
+//        ModelNode outcome = response.get(OUTCOME);
+//        assertThat("Restart server failure!", outcome.asString(), is(SUCCESS));
+        containerController.stop(CONTAINER);
+        containerController.start(CONTAINER);
+        boolean connectionOnline = false;
+        Exception lastEx = null;
+        for (int iTry = 0; iTry < MAX_RECONNECTS_TRAY; iTry++) {
+            try {
+                checkConnectionLive();
+                connectionOnline = true;
+                break;
+            } catch (Exception ex) {
+                LOGGER.trace("Failed to reconnect cli! (try-" + iTry + ")", ex);
+                Thread.sleep(10000);
+                disconnect();
+                connect();
+                lastEx = ex;
+            }
+        }
+        if (!connectionOnline) {
+            throw new RuntimeException("Couldn't reconnect cli to the server!", lastEx);
+        }
+    }
 
-        ModelNode response = client.execute(operation);
-        ModelNode outcome = response.get(OUTCOME);
-        assertThat("Restart server failure!", outcome.asString(), is(SUCCESS));
+    /**
+     * It is used as easy request to check if cli is online
+     *
+     * @throws NullPointerException When the response from the server is null
+     */
+    private void checkConnectionLive() throws IOException, NullPointerException {
+        // /subsystem=logging/log-file=*:read-resource
+        final ModelNode address = new ModelNode();
+        address.add(SUBSYSTEM, "logging")
+                .add("log-file", "*")
+                .protect();
+        final ModelNode operation = new ModelNode();
+        operation.get(OP).set(READ_RESOURCE_OPERATION);
+        operation.get(INCLUDE_RUNTIME).set(true);
+        operation.get(OP_ADDR).set(address);
+
+        final ModelNode response = client.execute(operation);
+        if (response == null) {
+            throw new NullPointerException("Response from cli can't be null!");
+        }
     }
 
     protected void copyLibraries(String[] expectedJars) {
@@ -251,17 +294,7 @@ public class EESubsystemGlobalDirectory {
      * @param path Expected set path for current global directory
      */
     protected ModelNode verifyProperlyRegistered(String name, String path) throws IOException {
-        // /subsystem=ee/global-directory=<<name>>:read-resource
-        final ModelNode address = new ModelNode();
-        address.add(SUBSYSTEM, SUBSYSTEM_EE)
-                .add(GLOBAL_DIRECTORY, name)
-                .protect();
-        final ModelNode operation = new ModelNode();
-        operation.get(OP).set(READ_RESOURCE_OPERATION);
-        operation.get(INCLUDE_RUNTIME).set(true);
-        operation.get(OP_ADDR).set(address);
-
-        ModelNode response = client.execute(operation);
+        ModelNode response = readGlobalDirectory(name);
         ModelNode outcome = response.get(OUTCOME);
         assertThat("Read resource of global directory " + name + " failure!", outcome.asString(), is(SUCCESS));
 
@@ -271,11 +304,11 @@ public class EESubsystemGlobalDirectory {
     }
 
     /**
-     * Verify global directory isn't exist
+     * Read resource command for global directory
      *
-     * @param name Name of global directory for verify
+     * @param name Name of global directory
      */
-    protected ModelNode verifyNonExist(String name) throws IOException {
+    private ModelNode readGlobalDirectory(String name) throws IOException {
         // /subsystem=ee/global-directory=<<name>>:read-resource
         final ModelNode address = new ModelNode();
         address.add(SUBSYSTEM, SUBSYSTEM_EE)
@@ -286,7 +319,16 @@ public class EESubsystemGlobalDirectory {
         operation.get(INCLUDE_RUNTIME).set(true);
         operation.get(OP_ADDR).set(address);
 
-        ModelNode response = client.execute(operation);
+        return client.execute(operation);
+    }
+
+    /**
+     * Verify global directory isn't exist
+     *
+     * @param name Name of global directory for verify
+     */
+    protected ModelNode verifyNonExist(String name) throws IOException {
+        ModelNode response = readGlobalDirectory(name);
         ModelNode outcome = response.get(OUTCOME);
         assertThat("Global directory " + name + " still exist!", outcome.asString(), not(SUCCESS));
         return response;

@@ -56,14 +56,7 @@ public class EeSubsystemGlobalDirectoryDomainTestCase extends EESubsystemGlobalD
 
     @Test
     public void testAppSharedLib() throws IOException {
-        copyLibraries(null);
-        register(GDN);
-        verifyProperlyRegistered(GDN, getLibraryPath());
-        restartServer();
-        restartServer();
-        restartServer();
-        restartServer();
-        checkLogs(null);
+
     }
 
 }
