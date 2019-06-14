@@ -31,6 +31,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
+
 //import java.net.URL;
 
 /**
@@ -84,8 +86,14 @@ public class EeSubsystemGlobalDirectoryTestCase extends EESubsystemGlobalDirecto
         Call some method from global-directory in deployment and verify method output
     */
     @Test
-    public void testModifyDependencySharedLibs() {
-
+    public void testModifyDependencySharedLibs() throws IOException, InterruptedException {
+        copyLibraries(null);
+        register(GDN);
+        verifyProperlyRegistered(GDN, getLibraryPath());
+        restartServer();
+        checkLogs(null);
+        deployApplication(null);
+        
     }
 
     /*
